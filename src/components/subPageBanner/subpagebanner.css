@@ -1,0 +1,90 @@
+.subpagebanner {
+    width: 100%;
+    /* height: 40vh; */
+    /* background: blue; */
+}
+
+.subpagebanner .banner {
+    width: 100%;
+    height: 550px;
+    position: relative;
+}
+
+.subpagebanner .banner > img {
+    width: 100%;
+    height: 100%;
+}
+
+.subpagebanner .banner .subpage_text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.subpagebanner .banner .subpage_text h1 {
+    font-family: Segoe UI;
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 72px;
+    color: #fff;
+}
+
+.subpagebanner .subpage_breadcrumb {
+    width: 100%;
+    background: #EC1F25;
+    padding: 16px 133px;
+}
+
+.subpagebanner .subpage_breadcrumb h3{
+    font-family: Segoe UI;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 21.28px;
+    color: #fff;
+}
+
+
+@media screen and (max-width: 430px) {
+    .subpagebanner {
+        width: 100%;
+        /* height: 40vh; */
+        /* background: blue; */
+    }
+    
+    .subpagebanner .banner {
+        width: 100%;
+        height: 40vh;
+    }
+
+    .subpagebanner .banner img{
+        object-fit: cover;
+    }
+
+    .subpagebanner .banner .subpage_text h1 {
+        font-family: Segoe UI;
+        font-size: 34px;
+        line-height: 40px;
+        color: #fff;
+    }
+
+    .subpagebanner .subpage_breadcrumb {
+        padding: 12px;
+    }
+    
+    .subpagebanner .subpage_breadcrumb h3{
+        font-family: Segoe UI;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 21.28px;
+        color: #fff;
+    }
+
+
+    
+}

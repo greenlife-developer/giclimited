@@ -1,0 +1,424 @@
+.hero {
+  width: 100%;
+  position: relative;
+  height: 120vh;
+  background: #000;
+}
+
+.hero > img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.hero > .hero-content-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero > .hero-content-container .hero-content {
+  display: flex;
+  align-items: center;
+  gap: 150px;
+  padding: 133px;
+}
+
+.hero > .hero-content-container .hero-content h1 {
+  font-family: Segoe UI;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 72px;
+  margin-right: 97px;
+  margin-bottom: 18px;
+  color: #fff;
+}
+
+.hero > .hero-content-container .hero-content p {
+  font-family: Segoe UI;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  color: #fff;
+  margin-bottom: 30px;
+}
+
+.hero > .hero-content-container .hero-content .actions {
+  display: flex;
+  gap: 20px;
+}
+
+.hero > .hero-content-container .hero-content button {
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19.5px;
+  background: #ec1f25;
+  border: none;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 15px 20px;
+}
+
+.hero > .hero-content-container .hero-content button a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.hero > .hero-content-container .hero-content button:last-child {
+  background: #ffffff4d;
+}
+
+.hero > .hero-content-container .hero-content img {
+  border: 37px solid #fff;
+}
+
+/* ------------------------------ SECTION 1 ---------------------------------- */
+.section_1 {
+  padding: 100px 130px;
+  display: flex;
+  gap: 80px;
+}
+
+.section_1 img {
+  padding: 12px 20px;
+  background: #3c465b;
+}
+
+.section_1 .section_1_text p {
+  font-family: Segoe UI;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 25px;
+  color: #3c465b;
+}
+
+.section_1 .section_1_text h1 {
+  font-family: Segoe UI;
+  font-size: 64px;
+  font-weight: 600;
+  line-height: 55px;
+  color: #ec1f25;
+}
+
+.section_1 .section_1_text .line {
+  height: 4px;
+  width: 145px;
+  background: #3c465b;
+  margin: 18px 0 25px;
+}
+
+.section_1 .section_1_text h1 span {
+  display: block;
+  color: #3c465b;
+}
+
+/* ------------------------------ !SECTION 1 ---------------------------------- */
+
+/* ------------------------------ SECTION 2 | SERVICES ---------------------------------- */
+.section_2_services {
+  padding: 0 0 85px;
+}
+
+.section_2_services .services_header {
+  text-align: center;
+}
+
+.section_2_services .services_header h1 {
+  font-family: Segoe UI;
+  font-size: 64px;
+  font-weight: 600;
+  color: #3c465b;
+  line-height: 55px;
+}
+
+.section_2_services .services_header h1 > span {
+  color: #ec1f25;
+}
+
+.section_2_services .services_header h1 {
+  font-family: Segoe UI;
+  font-size: 64px;
+  font-weight: 600;
+  color: #3c465b;
+  line-height: 55px;
+}
+
+.section_2_services .services_header h5 {
+  font-family: Segoe UI;
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 25px;
+  margin-bottom: 30px;
+  color: #3c465b;
+}
+
+.section_2_services .services_header p {
+  font-family: Segoe UI;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 25px;
+  color: #3c465b;
+}
+
+.section_2_services .services_header .line {
+  background: #3c465b;
+  height: 4px;
+  width: 150px;
+  margin: 16px auto 38px;
+}
+
+.section_2_services .service_cards {
+  padding: 0 205px;
+}
+
+.section_2_services .service_cards .cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  margin: 30px 0 0;
+}
+
+.section_2_services .service_cards .card {
+  /* display: flex;
+    flex-direction: column; */
+  border: 1px solid #3c465b;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0px 10px 24px 0px #0000002e;
+}
+
+.section_2_services .service_cards .card img {
+  margin: 34px 0 20px;
+}
+
+.section_2_services .service_cards .card h5 {
+  font-family: Segoe UI;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 25px;
+  color: #3c465b;
+  margin-bottom: 20px;
+  padding: 0 120px;
+}
+
+.section_2_services .service_cards .card p {
+  font-family: Segoe UI;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 25px;
+  text-align: center;
+  color: #3c465b;
+  margin-bottom: 50px;
+  padding: 0 60px;
+}
+
+/* ------------------------------ !SECTION 2 | SERVICES ---------------------------------- */
+
+/* Infinite Scrolling Logo Section */
+.section_3_companies {
+  padding: 50px 130px;
+  /* background: #f5f5f5; */
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.section_3_companies h1 {
+  font-family: Segoe UI;
+  font-size: 64px;
+  font-weight: 600;
+  line-height: 75px;
+  margin-bottom: 15px;
+  color: #3c465b;
+}
+
+.section_3_companies h1 > span {
+  color: #ec1f25;
+}
+
+.logo_scroller {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.logo_scroller_inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  animation: scroll 20s linear infinite;
+}
+
+.logo_scroller_inner img {
+  height: 100px;
+  margin: 0 20px;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .hero {
+    /* height: auto; Adjust height for smaller screens */
+    /* background: red; */
+    height: 70vh;
+  }
+
+  .hero > .hero-content-container {
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero > .hero-content-container .hero-content {
+    flex-direction: column;
+    gap: 20px;
+    padding: 0;
+  }
+
+  .hero > .hero-content-container .hero-content h1 {
+    font-size: 32px;
+    line-height: 38px;
+    text-align: center;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .hero > .hero-content-container .hero-content p {
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .hero > .hero-content-container .hero-content .actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hero > .hero-content-container .hero-content button {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+
+  .hero > .hero-content-container .hero-content img {
+    width: 100%;
+    height: auto;
+    border: none;
+    display: none;
+  }
+
+  .section_1 {
+    flex-direction: column;
+    padding: 50px 20px 150px;
+    gap: 20px;
+  }
+
+  .section_1 img {
+    width: 100%;
+    height: auto;
+  }
+
+  .section_1 .section_1_text h1 {
+    font-size: 32px;
+    line-height: 38px;
+  }
+
+  .section_1 .section_1_text p {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .section_2_services .service_cards {
+    padding: 0 20px;
+  }
+
+  .section_2_services .services_header .line {
+    margin: 10px auto 15px;
+  }
+
+  .section_2_services .services_header h1 {
+    font-size: 32px;
+    line-height: 38px;
+  }
+
+  .section_2_services .services_header h5 {
+    font-size: 24px;
+    line-height: 24px;
+  }
+
+  .section_2_services .services_header p {
+    font-size: 16px;
+    line-height: 21px;
+  }
+
+  .section_2_services .service_cards .cards {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .section_2_services .service_cards .card h5 {
+    padding: 0 15px;
+  }
+  
+  .section_2_services .service_cards .card p {
+    padding: 0 20px;
+  }
+  
+
+  .section_3_companies {
+    padding: 30px 20px;
+  }
+
+  .section_3_companies h1 {
+    font-size: 32px;
+    line-height: 38px;
+  }
+
+  .logo_scroller_inner img {
+    height: 60px;
+    margin: 0 10px;
+  }
+
+  .newsletter {
+    padding: 70px 20px;
+  }
+
+  .newsletter .form_field input {
+    margin-bottom: 30px;
+  }
+
+  .footer {
+    padding: 30px 20px;
+  }
+
+  .footer .footer_items {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .footer .footer_item {
+    text-align: center;
+  }
+
+  .footer .footer_item ul {
+    text-align: center;
+    padding: 0;
+  }
+
+  .footer .footer_item img.logo {
+    margin-bottom: 20px;
+  }
+}
