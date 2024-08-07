@@ -1,0 +1,189 @@
+.consulting_section_1 {
+  padding: 80px 130px;
+}
+
+.consulting_section_1 > h1 {
+  font-family: Segoe UI;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 72px;
+  text-align: center;
+  color: #323d50;
+  width: 70%;
+  margin: 0 auto 65px;
+}
+
+.consulting_section_1 > p {
+  font-family: Segoe UI;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 28px;
+  margin-bottom: 40px;
+  color: #323d50;
+}
+
+.consulting_section_1 h1 > span {
+  color: #ec1f25;
+}
+
+.consulting_section_1 .consulting_list > h3 {
+  color: #323d4f;
+  font-family: Segoe UI;
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 28px;
+}
+
+.consulting_section_1 .consulting_list.human_resources h5 {
+    font-family: Segoe UI;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 32px;
+    color: #323D4F;
+}
+
+.consulting_section_1 .consulting_list.human_resources {
+    margin-bottom: 65px;
+}
+
+.consulting_section_1 .consulting_list.human_resources > p {
+    margin: 0;
+}
+
+.consulting_section_1 .consulting_list > p {
+  color: #323d4f;
+  font-family: Segoe UI;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 38px;
+  margin: 30px 0;
+}
+
+.consulting_section_1 .consulting_list.learning > p {
+  margin: 5px 0;
+}
+
+.consulting_section_1 .consulting_list.learning > ul {
+    margin: 0 50px;
+}
+
+.consulting_section_1 .consulting_list.executive > h3 {
+    margin: 50px 0 0;
+}
+
+.consulting_section_1 .consulting_list ul {
+    margin: 0 40px;
+}
+
+
+.consulting_section_1 .consulting_list ol li,
+.consulting_section_1 .consulting_list ul li {
+  font-family: Segoe UI;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 38px;
+  text-align: left;
+  color: #323d50;
+}
+
+
+
+.consulting_section_1 .consulting_row {
+    display: flex;
+    align-items: center;
+    gap: 130px;
+    margin: 40px 0;
+}
+
+.consulting_section_1 .consulting_row h1 {
+    font-family: Segoe UI;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 18px;
+    color: #54666D;   
+    margin: 0 0 10px;
+}
+
+
+.consulting_section_1 .consulting_row p, .consulting_section_1 .consulting_row ul li {
+    font-family: Segoe UI;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 34px;
+    color: #323D4F;
+}
+
+
+
+
+
+
+
+@media only screen and (max-width: 430px) {
+    .consulting_section_1 {
+      padding: 40px 20px;
+    }
+  
+    .consulting_section_1 > h1 {
+      font-size: 36px;
+      line-height: 42px;
+      width: 100%;
+      margin: 0 auto 30px;
+    }
+  
+    .consulting_section_1 > p {
+      font-size: 14px;
+      line-height: 24px;
+      margin-bottom: 20px;
+    }
+  
+    .consulting_section_1 .consulting_list > h3 {
+      font-size: 20px;
+      line-height: 24px;
+    }
+  
+    .consulting_section_1 .consulting_list.human_resources h5 {
+      font-size: 16px;
+      line-height: 28px;
+    }
+  
+    .consulting_section_1 .consulting_list > p {
+      font-size: 14px;
+      line-height: 28px;
+      margin: 20px 0;
+    }
+  
+    .consulting_section_1 .consulting_list ul,
+    .consulting_section_1 .consulting_list ol {
+      margin: 0 20px;
+    }
+  
+    .consulting_section_1 .consulting_row {
+      flex-direction: column-reverse;
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .consulting_section_1 .consulting_row.row_2 {
+      flex-direction: column;
+      gap: 20px;
+      margin: 20px 0;
+    }
+  
+    .consulting_section_1 .consulting_row h1 {
+      font-size: 20px;
+      line-height: 24px;
+      margin-bottom: 5px;
+    }
+
+    .consulting_section_1 .consulting_row img {
+        width: 100%;
+    }
+  
+    .consulting_section_1 .consulting_row p, 
+    .consulting_section_1 .consulting_row ul li {
+      font-size: 14px;
+      line-height: 28px;
+    }
+  }
+  

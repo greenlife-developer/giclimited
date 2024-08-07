@@ -14,7 +14,7 @@ const Blogs = () => {
         image={contactbannerimg}
         bread="Home | Blogs"
       />
-
+ 
       <section className="blog_section_1">
         <h3>Coming soon</h3>
       </section>

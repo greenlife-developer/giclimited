@@ -33,6 +33,9 @@
     font-weight: 700;
     line-height: 72px;
     color: #fff;
+    width: 60%;
+    text-align: center;
+    margin: auto;
 }
 
 .subpagebanner .subpage_breadcrumb {
@@ -71,6 +74,8 @@
         font-size: 34px;
         line-height: 40px;
         color: #fff;
+        width: 90%;
+        margin: auto;
     }
 
     .subpagebanner .subpage_breadcrumb {

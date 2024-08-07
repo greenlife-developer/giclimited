@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Job from './pages/job/Job';
 import ContactUs from './pages/contact/ContactUs';
 import Blogs from './pages/blog/Blogs';
+import Consulting from './pages/consulting/Consulting';
 
 function App() {
   return (
@@ -19,7 +20,9 @@ function App() {
           <Route path="/jobs" element={<Job />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/blogs" element={<Blogs />} />
-          <Route path="/blog/:id" element={<ContactUs />} />
+          <Route path="/blog/:id" element={<Blogs />} />
+          <Route path="/consulting" element={<Consulting />} />
+          <Route path="/consulting/:id" element={<Consulting />} />
         </Routes>
       </BrowserRouter>
     </div>

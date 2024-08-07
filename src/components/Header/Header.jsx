@@ -27,12 +27,8 @@ const Header = () => {
       li: "Consulting",
       items: [
         {
-          name: "Financial modelling services",
-          to: "/consulting/financial-modelling",
-        },
-        {
-          name: "Operational development",
-          to: "/consulting/operational-development",
+          name: "Operational Improvement",
+          to: "/consulting/operational-improvement",
         },
         {
           name: "Business valuation services",
@@ -57,9 +53,7 @@ const Header = () => {
           to: "/consulting/feasibility-study",
         },
         { name: "Human resources", to: "/consulting/human-resources" },
-        { name: "Human capital outsourcing", to: "/consulting/human-capital" },
-        { name: "Consulting services", to: "/consulting/consulting-services" },
-        { name: "Business consulting", to: "/consulting/business-consulting" },
+        { name: "Human capital outsourcing", to: "/consulting/human-capital" }
       ],
     },
     {
@@ -185,6 +179,10 @@ const Header = () => {
     setOpenItemIndex(openItemIndex === index ? null : index);
   };
 
+  const handleCloseNav = () => {
+    setShowNav(!showNav)
+  }
+
   return (
     <div className="header">
       <nav className="nav">
@@ -201,9 +199,10 @@ const Header = () => {
                 key={i}
                 isOpen={openItemIndex === i}
                 onClick={() => handleItemClick(i)}
+                closeNav={handleCloseNav}
               />
             ))}
-            <div onClick={() => setShowNav(!showNav)} className="close_icon">
+            <div onClick={handleCloseNav} className="close_icon">
               <img src={xClose} alt="close" />
             </div>
           </ul>
