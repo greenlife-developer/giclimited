@@ -1,0 +1,98 @@
+.leave_a_message_component {
+  padding: 90px 130px 48px;
+}
+
+.leave_a_message_component h1 {
+  font-family: Montserrat;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 55px;
+  color: #323d4f;
+  text-align: center;
+}
+
+.leave_a_message_component .line {
+  width: 130px;
+  height: 4px;
+  background: #323d4f;
+  margin: 15px auto 45px;
+}
+
+.leave_a_message_component .form_field {
+  width: 100%;
+  /* background-color: teal; */
+  display: flex;
+  gap: 25px;
+}
+
+.leave_a_message_component .form_field > div {
+  /* background-color: red; */
+  margin-bottom: 25px;
+  width: 100%;
+}
+
+.leave_a_message_component .form_field > div input,
+.leave_a_message_component .form_field > div textarea {
+  width: 100%;
+  font-family: Segoe UI;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 55px;
+  padding: 0 15px;
+  outline: none;
+  background: transparent;
+  border-radius: 12px;
+  border: 1px solid #323d4f;
+}
+
+.leave_a_message_component .form_field > div input[type="submit"] {
+  background: #323d4f;
+  color: #fff;
+}
+
+
+@media (max-width: 430px) {
+  .leave_a_message_component {
+    padding: 20px;
+  }
+
+  .leave_a_message_component h1 {
+    font-size: 36px;
+    line-height: 40px;
+  }
+
+  .leave_a_message_component .line {
+    width: 80px;
+    height: 3px;
+    margin: 10px auto 30px;
+  }
+
+  .leave_a_message_component .form_field {
+    display: block;
+    gap: 15px;
+  }
+
+  .leave_a_message_component .form_field > div {
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
+  .leave_a_message_component .form_field > div input,
+  .leave_a_message_component .form_field > div textarea {
+    font-size: 14px;
+    line-height: 40px;
+    padding: 10px 15px;
+    border-radius: 8px;
+  }
+
+  .leave_a_message_component .form_field > div textarea {
+    height: 150px;
+    line-height: 28px;
+    resize: none;
+  }
+
+  .leave_a_message_component .form_field > div input[type="submit"] {
+    line-height: 40px;
+    padding: 10px 0;
+  }
+}

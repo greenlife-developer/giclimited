@@ -1,0 +1,153 @@
+.job_section_1 {
+  padding: 110px 85px;
+  display: flex;
+  align-items: center;
+  gap: 104px;
+}
+
+.job_section_1 .item_text h1 {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 55px;
+  color: #323d50;
+}
+
+.job_section_1 .item_text .line {
+  height: 4px;
+  width: 120px;
+  background: #323d50;
+  margin: 15px 0;
+}
+
+.job_section_1 .item_text p {
+  font-family: Segoe UI;
+  font-size: 16px;
+  font-weight: 600;
+  color: #323d50;
+  line-height: 24px;
+}
+
+.job_section_2 {
+  background: #f3f3f3;
+  padding: 68px 400px;
+  margin-bottom: 40px;
+}
+
+.job_section_2 h1 {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 55px;
+  color: #292d32;
+  text-align: center;
+  margin-bottom: 90px;
+}
+
+.job_section_2 .form_field input,
+.job_section_2 .form_field select {
+  font-family: Segoe UI;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 55px;
+  border: 1px solid #292d32;
+  background: none;
+  border-radius: 50px;
+  margin-bottom: 60px;
+  width: 100%;
+  padding: 2px 20px;
+}
+
+.job_section_2 .form_field select {
+  padding: 20px;
+}
+
+.job_section_2 .form_field input.calc {
+  border-radius: 0;
+}
+
+.job_section_2 .form_field label {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-family: Segoe UI;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  padding: 12px;
+}
+
+.job_section_2 .application_form form button {
+  border-radius: 50px;
+  font-family: Segoe UI;
+  font-size: 16px;
+  font-weight: 700;
+  background: #323d4f;
+  border: none;
+  border: 1px solid #323d4f9c;
+  padding: 2px 40px;
+  color: #fff;
+  line-height: 55px;
+}
+
+@media screen and (max-width: 430px) {
+  .job_section_1 {
+    padding: 100px 20px;
+    display: block;
+    text-align: center;
+  }
+
+  .job_section_1 .item_text h1 {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .job_section_1 .item_text .line {
+    width: 60px;
+    margin: 10px auto;
+  }
+
+  .job_section_1 .item_text p {
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+  }
+
+  .job_section_1 .item_image {
+    margin-top: 20px;
+  }
+
+  .job_section_1 .item_image img {
+    width: 100%;
+  }
+
+  .job_section_2 {
+    padding: 20px;
+  }
+
+  .job_section_2 h1 {
+    font-size: 36px;
+    line-height: 40px;
+    margin-bottom: 30px;
+  }
+
+  .job_section_2 .form_field {
+    margin-bottom: 20px;
+  }
+
+  .job_section_2 .form_field input,
+  .job_section_2 .form_field select {
+    font-size: 14px;
+    padding: 10px 15px;
+    line-height: 24px;
+    margin-bottom: 0;
+  }
+
+  .job_section_2 .form_field label {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .job_section_2 .application_form form button {
+    padding: 10px 20px;
+    line-height: 24px;
+  }
+}

@@ -161,11 +161,11 @@ const Header = () => {
     },
     {
       li: "Blog",
-      to: "/blog",
+      to: "/blogs",
     },
     {
-      li: "Contacts",
-      to: "/contacts",
+      li: "Contact us",
+      to: "/contact-us",
     },
   ];
 
