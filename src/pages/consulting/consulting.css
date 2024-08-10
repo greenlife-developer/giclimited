@@ -71,7 +71,7 @@
     margin: 50px 0 0;
 }
 
-.consulting_section_1 .consulting_list ul {
+.consulting_section_1 .consulting_list ul, .consulting_section_1 .consulting_list ol {
     margin: 0 40px;
 }
 
@@ -102,6 +102,14 @@
     line-height: 18px;
     color: #54666D;   
     margin: 0 0 10px;
+}
+
+.consulting_section_1 .consulting_row h4 {
+    font-family: Segoe UI;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 18px;
+    color: #54666D;   
 }
 
 

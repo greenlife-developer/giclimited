@@ -357,26 +357,7 @@ const Consulting = () => {
 
           <section className="consulting_section_1">
             <div className="consulting_row">
-              <div className="row_text">
-                <h1>Business Name Registration</h1>
-                <p>
-                  Business name registration is required in the following
-                  circumstances: (a) If an individual uses a business name that
-                  differs in any way from their true surname. This applies even
-                  if the individual's first name or initials are included. For
-                  example, Mr. John Murphy must register if he trades as Murphy
-                  Builders, but not if he trades as Murphy or John Murphy. (b)
-                  If a firm uses a business name that differs in any way from
-                  the true names of all individual partners and the corporate
-                  names of all corporate partners. (c) If a company uses a
-                  business name that differs in any way from its full corporate
-                  name. <br /> (d) If a person who has a place of business in
-                  the State engages in the business of publishing a newspaper.
-                </p>
-              </div>
-              <div className="row_img">
-                <img src={img1} alt="" />
-              </div>
+              
             </div>
             <div className="consulting_row row_2">
               <div className="row_img">

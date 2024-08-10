@@ -7,6 +7,9 @@ import Job from './pages/job/Job';
 import ContactUs from './pages/contact/ContactUs';
 import Blogs from './pages/blog/Blogs';
 import Consulting from './pages/consulting/Consulting';
+import Audits from './pages/audits/Audits';
+import Strategy from './pages/strategy/Strategy';
+import Advisory from './pages/advisory/Advisory';
 
 function App() {
   return (
@@ -23,6 +26,12 @@ function App() {
           <Route path="/blog/:id" element={<Blogs />} />
           <Route path="/consulting" element={<Consulting />} />
           <Route path="/consulting/:id" element={<Consulting />} />
+          <Route path="/audits" element={<Audits />} />
+          <Route path="/audits/:id" element={<Audits />} />
+          <Route path="/strategy" element={<Strategy />} />
+          <Route path="/strategy/:id" element={<Strategy />} />
+          <Route path="/advisory" element={<Advisory />} />
+          <Route path="/advisory/:id" element={<Advisory />} />
         </Routes>
       </BrowserRouter>
     </div>

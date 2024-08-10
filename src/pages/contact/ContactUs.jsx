@@ -27,7 +27,7 @@ const ContactUs = () => {
             </div>
             <div className="info_item">
               <h3>Email</h3>
-              <p>info@giclimited.com</p>
+              <p>info@giclimited.net</p>
             </div>
             <div className="info_item">
               <h3>Phone</h3>

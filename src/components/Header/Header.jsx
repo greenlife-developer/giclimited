@@ -62,7 +62,7 @@ const Header = () => {
         {
           name: "Business regulatory services",
           to: "/audits/business-regulatory",
-        },
+        }, 
         { name: "Risk and compliance", to: "/audits/risk-compliance" },
         {
           name: "System monitoring and control",
@@ -72,7 +72,7 @@ const Header = () => {
           name: "Business development service",
           to: "/audits/business-development",
         },
-        { name: "Debt recovery", to: "/audits/debt-recovery" },
+        // { name: "Debt recovery", to: "/audits/debt-recovery" },
         {
           name: "Internal audit, risk and compliance services",
           to: "/audits/internal-audit",
@@ -87,10 +87,10 @@ const Header = () => {
         },
         { name: "Statutory records", to: "/audits/statutory-records" },
         { name: "Accountancy", to: "/audits/accountancy" },
-        {
-          name: "Internal debt recovery agents",
-          to: "/audits/internal-debt-recovery",
-        },
+        // {
+        //   name: "Internal debt recovery agents",
+        //   to: "/audits/internal-debt-recovery",
+        // },
         { name: "Statutory records", to: "/audits/statutory-records" },
       ],
     },
@@ -106,28 +106,28 @@ const Header = () => {
           name: "Strategic planning services",
           to: "/strategy/strategic-planning",
         },
-        {
-          name: "Business transformation improvement",
-          to: "/strategy/business-transformation",
-        },
+        // {
+        //   name: "Business transformation improvement",
+        //   to: "/strategy/business-transformation",
+        // },
         {
           name: "Wealth management services",
           to: "/strategy/wealth-management",
         },
-        {
-          name: "Internal audit, risk and compliance services",
-          to: "/strategy/internal-audit",
-        },
+        // {
+        //   name: "Internal audit, risk and compliance services",
+        //   to: "/strategy/internal-audit",
+        // },
         {
           name: "Change management services",
           to: "/strategy/change-management",
         },
+        // {
+        //   name: "Business registration",
+        //   to: "/strategy/business-registration",
+        // },
         {
-          name: "Business registration",
-          to: "/strategy/business-registration",
-        },
-        {
-          name: "Secretarial services in Nigeria",
+          name: "Company formation and Secretarial services in Nigeria",
           to: "/strategy/secretarial-services",
         },
       ],
