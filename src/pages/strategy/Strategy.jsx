@@ -337,7 +337,7 @@ const Strategy = () => {
 
               <div className="row">
                 <p>
-                  At GIC Consulting Ltd, we offer personalized multi-asset
+                  At GIC Limited Ltd, we offer personalized multi-asset
                   portfolios to diversify investments and reduce volatility. We
                   provide comprehensive wealth management services, including
                   dedicated advisors, personalized planning, tax-smart

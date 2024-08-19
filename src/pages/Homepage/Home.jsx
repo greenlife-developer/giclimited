@@ -12,6 +12,7 @@ import accesslogoimg from "../../assets/companies/access_bank.jpg";
 import kolologoimg from "../../assets/companies/kolo.jpg";
 import rexayologoimg from "../../assets/companies/rexayo.jpg";
 import rosabon from "../../assets/companies/rosabon.jpg";
+import gfflogo from "../../assets/companies/gfflogo.jpg"
 import { Link } from "react-router-dom";
 
 const Home = () => {
@@ -20,6 +21,7 @@ const Home = () => {
     kolologoimg,
     rexayologoimg,
     rosabon,
+    gfflogo
   ];
 
   return (
@@ -53,11 +55,11 @@ const Home = () => {
       <section className="section_1">
         <div className="section_1_text">
           <h1>
-            GIC <span>Consultancy</span>
+            GIC <span>LIMITED</span>
           </h1>
           <div className="line"></div>
           <p>
-            GIC Consulting is a specialized account and consulting services firm
+            GIC Limited is a specialized account and Limited services firm
             in Nigeria, offering advanced strategies in supporting public and
             private clients in achieving their objectives through a variety of
             services, including company formation, secretarial services,

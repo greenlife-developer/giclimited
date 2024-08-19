@@ -114,7 +114,7 @@ const Consulting = () => {
 
             <div className="consulting_list">
               <h3>
-                At GIC Consulting, we offer comprehensive business valuation
+                At GIC Limited, we offer comprehensive business valuation
                 services that include:
               </h3>
               <ul>
