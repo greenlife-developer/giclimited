@@ -183,7 +183,7 @@ const Audits = () => {
         </div>
       )}
 
-      {id && id === "system-monitoring" && (
+      {/* {id && id === "system-monitoring" && (
         <div className="consulting_sub_page">
           <SubPageBanner
             text={"System Monitoring & Control"}
@@ -211,7 +211,7 @@ const Audits = () => {
             </div>
           </section>
         </div>
-      )}
+      )} */}
 
       {id && id === "business-development" && (
         <div className="consulting_sub_page">
@@ -470,7 +470,7 @@ const Audits = () => {
         </div>
       )}
 
-      {id && id === "insolvency" && (
+      {/* {id && id === "insolvency" && (
         <div className="consulting_sub_page">
           <SubPageBanner
             text={"Insolvency & Corporate Reengineering Services"}
@@ -670,9 +670,9 @@ const Audits = () => {
             </div>
           </section>
         </div>
-      )}
+      )} */}
 
-      {id && id === "statutory-records" && (
+      {/* {id && id === "statutory-records" && (
         <div className="consulting_sub_page">
           <SubPageBanner
             text={"Statutory Records"}
@@ -701,7 +701,7 @@ const Audits = () => {
             </div>
           </section>
         </div>
-      )}
+      )} */}
 
       {/* {id && id === "internal-debt-recovery" && (
         <div className="consulting_sub_page">

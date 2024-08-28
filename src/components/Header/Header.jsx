@@ -26,10 +26,10 @@ const Header = () => {
     {
       li: "Consulting",
       items: [
-        {
-          name: "Operational Improvement",
-          to: "/consulting/operational-improvement",
-        },
+        // {
+        //   name: "Operational Improvement",
+        //   to: "/consulting/operational-improvement",
+        // },
         {
           name: "Business valuation services",
           to: "/consulting/business-valuation",
@@ -38,8 +38,8 @@ const Header = () => {
           name: "Learning and development",
           to: "/consulting/learning-development",
         },
-        { name: "Executive search", to: "/consulting/executive-search" },
-        { name: "Consult services", to: "/consulting/consult-services" },
+        // { name: "Executive search", to: "/consulting/executive-search" },
+        // { name: "Consult services", to: "/consulting/consult-services" },
         {
           name: "People performance and technology",
           to: "/consulting/people-performance",
@@ -64,10 +64,10 @@ const Header = () => {
           to: "/audits/business-regulatory",
         }, 
         { name: "Risk and compliance", to: "/audits/risk-compliance" },
-        {
-          name: "System monitoring and control",
-          to: "/audits/system-monitoring",
-        },
+        // {
+        //   name: "System monitoring and control",
+        //   to: "/audits/system-monitoring",
+        // },
         {
           name: "Business development service",
           to: "/audits/business-development",
@@ -81,17 +81,17 @@ const Header = () => {
           name: "Financial risk management",
           to: "/audits/financial-risk-management",
         },
-        {
-          name: "Insolvency & cooperate reengineering services",
-          to: "/audits/insolvency",
-        },
-        { name: "Statutory records", to: "/audits/statutory-records" },
-        { name: "Accountancy", to: "/audits/accountancy" },
+        // {
+        //   name: "Insolvency & cooperate reengineering services",
+        //   to: "/audits/insolvency",
+        // },
+        // { name: "Statutory records", to: "/audits/statutory-records" },
+        // { name: "Accountancy", to: "/audits/accountancy" },
         // {
         //   name: "Internal debt recovery agents",
         //   to: "/audits/internal-debt-recovery",
         // },
-        { name: "Statutory records", to: "/audits/statutory-records" },
+        // { name: "Statutory records", to: "/audits/statutory-records" },
       ],
     },
     {
@@ -122,10 +122,6 @@ const Header = () => {
           name: "Change management services",
           to: "/strategy/change-management",
         },
-        // {
-        //   name: "Business registration",
-        //   to: "/strategy/business-registration",
-        // },
         {
           name: "Company formation and Secretarial services in Nigeria",
           to: "/strategy/secretarial-services",
@@ -135,7 +131,7 @@ const Header = () => {
     {
       li: "Advisory",
       items: [
-        { name: "Company searches", to: "/advisory/company-searches" },
+        // { name: "Company searches", to: "/advisory/company-searches" },
         { name: "Corporate finance", to: "/advisory/corporate-finance" },
         {
           name: "Company formation services",
