@@ -37,27 +37,30 @@ const Job = () => {
     // Upload CV to Cloudinary
     try {
       setWaitForUpload(true); // Show loading spinner
-      if (
-        cvFile &&
-        (cvFile.type === "image/jpeg" ||
-          cvFile.type === "image/jpg" ||
-          cvFile.type === "image/png")
-      ) {
-        const formData = new FormData();
-        formData.append("file", cvFile);
-        formData.append("cloud_name", "dfrwntkjm");
-        formData.append("upload_preset", "hqq7lql7");
+      const formData = new FormData();
+      formData.append("file", cvFile);
+      formData.append("cloud_name", "dfrwntkjm");
+      formData.append("upload_preset", "hqq7lql7");
 
-        const response = await fetch(
-          "https://api.cloudinary.com/v1_1/dfrwntkjm/image/upload",
-          { method: "post", body: formData }
-        );
-        const imgData = await response.json();
-        cvUrl = imgData.secure_url; // Get the uploaded file URL
+      let cloudinaryUrl = "";
+
+      // Check the file type and set the appropriate Cloudinary API endpoint
+      if (
+        cvFile.type === "image/jpeg" ||
+        cvFile.type === "image/jpg" ||
+        cvFile.type === "image/png"
+      ) {
+        cloudinaryUrl = "https://api.cloudinary.com/v1_1/dfrwntkjm/image/upload";
+      } else if (cvFile.type === "application/pdf") {
+        cloudinaryUrl = "https://api.cloudinary.com/v1_1/dfrwntkjm/raw/upload"; // Cloudinary endpoint for PDF files
       } else {
-        alert("Please upload a valid image file (JPEG or PNG).");
+        alert("Please upload a valid file (JPEG, PNG, or PDF).");
         return;
       }
+
+      const response = await fetch(cloudinaryUrl, { method: "post", body: formData });
+      const fileData = await response.json();
+      cvUrl = fileData.secure_url; // Get the uploaded file URL
     } catch (error) {
       console.error("Error uploading CV:", error);
       alert("Failed to upload CV.");
