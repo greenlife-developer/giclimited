@@ -54,6 +54,7 @@ const Job = () => {
       } else if (cvFile.type === "application/pdf") {
         cloudinaryUrl = "https://api.cloudinary.com/v1_1/dfrwntkjm/raw/upload"; // Cloudinary endpoint for PDF files
       } else {
+        setWaitForUpload(false); 
         alert("Please upload a valid file (JPEG, PNG, or PDF).");
         return;
       }
@@ -62,6 +63,7 @@ const Job = () => {
       const fileData = await response.json();
       cvUrl = fileData.secure_url; // Get the uploaded file URL
     } catch (error) {
+      setWaitForUpload(false); 
       console.error("Error uploading CV:", error);
       alert("Failed to upload CV.");
       return;
@@ -92,9 +94,11 @@ const Job = () => {
         setWaitForUpload(false); // Hide loading spinner
         closePopup();
       } else {
+        setWaitForUpload(false); // Hide loading spinner
         alert("Failed to submit application.");
       }
     } catch (error) {
+      setWaitForUpload(false); // Hide loading spinner
       console.error("Error:", error);
       alert("An error occurred while submitting your application.");
     }
