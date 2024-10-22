@@ -580,51 +580,34 @@ const Advisory = () => {
             <div className="consulting_list business_development">
               <div className="row">
                 <p>
-                  Our team of experts, drawn from diverse and multi-disciplinary
-                  backgrounds, is dedicated to addressing the challenges you
-                  face with pension contributions.
+                  GIC Limited is also into real estate specializing in the
+                  buying and selling of land and properties, with expertise
+                  spanning residential, commercial, and industrial properties to
+                  ensure seamless transactions for clients.
                 </p>
                 <p>
-                  GIC Limited Pensions Advisory team leverages its unique
-                  expertise to assess both the current and future economic value
-                  of the Employer to the Plan. This enables us to clearly
-                  identify and tailor options for Trustees, whether related to
-                  Scheme Specific Funding or transactions GIC Limited offers
-                  expert advice on pension contributions and related challenges
-                  through:
+                  Our comprehensive services include land acquisition and sales,
+                  property development and management, residential and
+                  commercial property sales, and investment advisory services.
                 </p>
               </div>
 
               <div className="row">
-                <ul>
-                  <li>
-                    Scheme-Specific Funding Valuations: Assessing Employer
-                    Covenant strength and future contribution affordability, and
-                    advising on sustainable growth strategies.
-                  </li>
-                  <li>
-                    Transactions: Evaluating the impact of mergers, takeovers,
-                    refinancings, and other transactions on Employer Covenant.
-                  </li>
-                  <li>
-                    Restructuring and Insolvency: Providing guidance on solvent
-                    and insolvent restructurings, including benefit redesign and
-                    Company Voluntary Arrangements.
-                  </li>
-                  <li>
-                    Regulatory and Expert Witness Services: Advising on
-                    regulatory actions and offering expert witness services
-                    regarding Employer Covenant considerations.
-                  </li>
-                </ul>
-              </div>
-
-              <div className="row">
                 <p>
-                  We also support mergers and acquisitions by analyzing pension
-                  risks, combining actuarial, tax, and corporate finance
-                  expertise to deliver integrated advice, and offer tailored
-                  solutions for Irish pension schemes.
+                  At GIC Limited, we build on trust, integrity, and expertise to
+                  deliver value to clients and stakeholders, providing
+                  unparalleled market knowledge, professional and personalized
+                  service, transparent and secure transactions, and competitive
+                  pricing.
+                </p>
+                <p>
+                  Whether you're looking to invest, buy, sell, or develop
+                  property, our dedicated team is committed to meeting your real
+                  estate needs.
+                </p>
+                <p>
+                  To explore opportunities in the real estate market or inquire
+                  about our services, please contact us.
                 </p>
               </div>
             </div>
