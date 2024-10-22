@@ -140,7 +140,7 @@ const Header = () => {
         { name: "SME advisory services", to: "/advisory/sme-advisory" },
         { name: "Project management", to: "/advisory/project-management" },
         { name: "Bad debt recovery agent", to: "/advisory/bad-debt-recovery" },
-        { name: "Pension advisory services", to: "/advisory/pension-advisory" },
+        { name: "Real Estate", to: "/advisory/real-estate" },
         { name: "Organisational audit", to: "/advisory/organisational-audit" },
         { name: "Other marketing offering", to: "/advisory/other-marketing" },
       ],

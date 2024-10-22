@@ -47,6 +47,7 @@
   min-width: 350px;
   z-index: 1;
   background-color: #fff;
+  display: -ms-grid; /* IE11 Grid fallback */
   display: grid; /* Display grid layout */
   gap: 45px;
   margin-top: 40px;

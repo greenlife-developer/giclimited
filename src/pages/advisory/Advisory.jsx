@@ -562,20 +562,19 @@ const Advisory = () => {
             </div>
           </section>
         </div>
-      )} 
+      )}
 
-      {id && id === "pension-advisory" && (
+      {id && id === "real-estate" && (
         <div className="consulting_sub_page">
           <SubPageBanner
-            text={"Pension Advisory Services"}
+            text={"Real Estate"}
             image={advisorybannerimg}
-            bread="Home | Advisory | Pension Advisory Services"
+            bread="Home | Advisory | Real Estate"
           />
 
           <section className="consulting_section_1">
             <h1>
-              {" "}
-              <span>Pension Advisory</span> Services
+              Real <span>Estate</span>
             </h1>
 
             <div className="consulting_list business_development">
