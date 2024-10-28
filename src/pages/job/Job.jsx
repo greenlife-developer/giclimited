@@ -151,6 +151,28 @@ const Job = () => {
         </div>
       </section>
 
+      <section className="job_advert">
+        <div className="advert_details">
+          <h2>Position: Secretary</h2>
+          <h3>Requirements & Benefits:</h3>
+          <ul>
+            <li>SSCE/ND/HND/Bsc.</li>
+            <li>
+              Must know how to use corel draw, photoshop, Microsoft office etc
+            </li>
+            <li>Can make 3 contents in one day</li>
+            <li>Ensure customer satisfaction experience</li>
+            <li>Applicant MUST be within Ibadan</li>
+            <li>
+              They will work within 1. Iwo road Ibadan 2. Aliiwo Gate Ibadan.
+            </li>
+          </ul>
+          <h3>Salary 35k</h3>
+          <h3>Closing Date: November 4, 2024</h3>
+          <button onClick={openPopup}>Apply Now</button>
+        </div>
+      </section>
+
       {isPopupOpen && (
         <div className="popup">
           {waitForUpload && (<div className="loading_spinner"><h4>Please wait</h4></div>)}
