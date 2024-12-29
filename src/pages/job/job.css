@@ -321,11 +321,7 @@
 
   .job_advert {
     padding: 40px 10px;
-    background: #f9f9f9;
-    margin: 20px 0;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    text-align: center;
+    margin: 20px 10px;
   }
 
   .job_section_1 .item_image {
