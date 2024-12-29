@@ -107,6 +107,7 @@ const Job = () => {
       phone: e.target.phone.value,
       email: e.target.email.value,
       qualification: e.target.qualification.value,
+      position: e.target.position.value,
       cv: cvUrl,
     };
 
@@ -222,7 +223,7 @@ const Job = () => {
               </div>
               <div className="form_field">
                 <label>Position</label>
-                <select name="qualification" required>
+                <select name="position" required>
                   {jobAdverts.map((job, index) => (
                     <option value={job.position}>{job.position}</option>
                   ))}
