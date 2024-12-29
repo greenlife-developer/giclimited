@@ -7,10 +7,38 @@ import img1 from "../../assets/jobsectionimg.jpg";
 import "./job.css";
 import Footer from "../../components/Footer/Footer";
 
+const jobAdverts = [
+  {
+    position: "Digital Recovery Officer",
+    requirements: [
+      "Candidates should possess an ND,NCE,HND or BSc.",
+      "Age should be between 25 - 35 years.",
+      "Manage and recover outstanding debts from customers",
+      "Develop and implement effective debt recovery strategies",
+      "Identify and report on potential fraud or credit risks",
+      "Collaborate with internal teams to resolve customer disputes",
+      "Communicate with customers to negotiate payment plans and settlements",
+      "Maintain accurate records of debt recovery activities",
+      "Meet or exceed monthly debt recovery targets",
+      "Provide excellent customer service and maintain a professional image",
+    ],
+    responsibilities: [
+      "Experience : Not required",
+      "Very Strong communication and negotiation skills highly needed",
+      "Ability to work in a fast-paced environment",
+      "Excellent problem-solving and analytical skills",
+      "Strong attention to detail and organizational skills",
+      "Proficiency in MS Office and debt recovery software",
+    ],
+    salary: "#40,000, Performance based bonus of up to ₦300,000",
+    closingDate: "Open",
+  },
+];
+
 const Job = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [waitForUpload, setWaitForUpload] = useState(false); 
-  const [cvFile, setCvFile] = useState(null); // State to hold the file
+  const [waitForUpload, setWaitForUpload] = useState(false);
+  const [cvFile, setCvFile] = useState(null);
 
   const openPopup = () => {
     setIsPopupOpen(true);
@@ -21,7 +49,36 @@ const Job = () => {
   };
 
   const handleFileChange = (e) => {
-    setCvFile(e.target.files[0]); // Store the selected file
+    setCvFile(e.target.files[0]);
+  };
+
+  const uploadCV = async () => {
+    const formData = new FormData();
+    formData.append("file", cvFile);
+    formData.append("cloud_name", "dfrwntkjm");
+    formData.append("upload_preset", "hqq7lql7");
+
+    let cloudinaryUrl = "";
+
+    if (
+      cvFile.type === "image/jpeg" ||
+      cvFile.type === "image/jpg" ||
+      cvFile.type === "image/png"
+    ) {
+      cloudinaryUrl = "https://api.cloudinary.com/v1_1/dfrwntkjm/image/upload";
+    } else if (cvFile.type === "application/pdf") {
+      cloudinaryUrl = "https://api.cloudinary.com/v1_1/dfrwntkjm/raw/upload";
+    } else {
+      // alert("Please upload a valid file (JPEG, PNG, or PDF).\");
+      throw new Error("Invalid file type");
+    }
+
+    const response = await fetch(cloudinaryUrl, {
+      method: "post",
+      body: formData,
+    });
+    const fileData = await response.json();
+    return fileData.secure_url;
   };
 
   const submitForm = async (e) => {
@@ -34,73 +91,64 @@ const Job = () => {
 
     let cvUrl;
 
-    // Upload CV to Cloudinary
     try {
-      setWaitForUpload(true); // Show loading spinner
-      const formData = new FormData();
-      formData.append("file", cvFile);
-      formData.append("cloud_name", "dfrwntkjm");
-      formData.append("upload_preset", "hqq7lql7");
-
-      let cloudinaryUrl = "";
-
-      // Check the file type and set the appropriate Cloudinary API endpoint
-      if (
-        cvFile.type === "image/jpeg" ||
-        cvFile.type === "image/jpg" ||
-        cvFile.type === "image/png"
-      ) {
-        cloudinaryUrl = "https://api.cloudinary.com/v1_1/dfrwntkjm/image/upload";
-      } else if (cvFile.type === "application/pdf") {
-        cloudinaryUrl = "https://api.cloudinary.com/v1_1/dfrwntkjm/raw/upload"; // Cloudinary endpoint for PDF files
-      } else {
-        setWaitForUpload(false); 
-        alert("Please upload a valid file (JPEG, PNG, or PDF).");
-        return;
-      }
-
-      const response = await fetch(cloudinaryUrl, { method: "post", body: formData });
-      const fileData = await response.json();
-      cvUrl = fileData.secure_url; // Get the uploaded file URL
+      setWaitForUpload(true);
+      cvUrl = await uploadCV();
     } catch (error) {
-      setWaitForUpload(false); 
+      setWaitForUpload(false);
       console.error("Error uploading CV:", error);
       alert("Failed to upload CV.");
       return;
     }
 
-    // Prepare the data for email
     const data = {
       name: e.target.name.value,
       address: e.target.address.value,
       phone: e.target.phone.value,
       email: e.target.email.value,
       qualification: e.target.qualification.value,
-      cv: cvUrl, // Include the CV URL
+      cv: cvUrl,
     };
 
     try {
-      setWaitForUpload(true); // Show loading spinner
-      const response = await fetch("https://gicbackend.onrender.com/api/send-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      setWaitForUpload(true);
+      const response = await fetch(
+        "https://gicbackend.onrender.com/api/send-email",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
 
       if (response.ok) {
         alert("Application submitted successfully!");
-        setWaitForUpload(false); // Hide loading spinner
         closePopup();
       } else {
-        setWaitForUpload(false); // Hide loading spinner
-        alert("Failed to submit application.");
+        const errorResponse = await response.json();
+        console.error("Server error response:", errorResponse);
+        alert(
+          `Failed to submit application: ${
+            errorResponse.message || "Unknown error"
+          }`
+        );
       }
     } catch (error) {
-      setWaitForUpload(false); // Hide loading spinner
       console.error("Error:", error);
-      alert("An error occurred while submitting your application.");
+      if (
+        error.name === "TypeError" &&
+        error.message.includes("NetworkError")
+      ) {
+        alert("Network error: Please check your connection and try again.");
+      } else {
+        alert(
+          "An unexpected error occurred while submitting your application."
+        );
+      }
+    } finally {
+      setWaitForUpload(false);
     }
   };
 
@@ -109,73 +157,37 @@ const Job = () => {
       <Header />
       <SubPageBanner text={"Jobs"} image={jobbannerimg} bread="Home | Jobs" />
 
-      <section className="job_advert">
-        <h1>We Are Hiring!</h1>
-        <div className="advert_details">
-          <h2>Position: Credit and Collection Officer</h2>
-          <h3>Requirements & Benefits:</h3>
-          <ul>
-            <li>SSCE/ND/HND/Bsc.</li>
-            <li>
-              0 to 2 years experience with Microfinance institutions, Credit
-              company, MFB
-            </li>
-            <li>Must have a good smartphone</li>
-            <li>Excellent knowledge of using mobile phone</li>
-            <li>Ability to work 80% on the field with target</li>
-            <li>
-              Drive onboarding of new clients through direct and prospection
-            </li>
-            <li>
-              Cross-sell the company products (Loans, savings, investment etc)
-            </li>
-            <li>
-              Carry out credit assessment and detail KYC on every customer
-            </li>
-            <li>
-              Manage Loan portfolio by ensuring timely collection of the
-              outstanding loan.
-            </li>
-            <li>
-              Manage the relationship between the customer and the company
-            </li>
-            <li>Ensure customer satisfaction experience</li>
-            <li>Applicant MUST be within Ibadan</li>
-            <li>
-              They will work within 1. Iwo road Ibadan 2. Aliiwo Gate Ibadan.
-            </li>
-          </ul>
-          <h3>Salary 40k - 70k</h3>
-          <h3>Closing Date: October 28, 2024</h3>
-          <button onClick={openPopup}>Apply Now</button>
-        </div>
-      </section>
-
-      <section className="job_advert">
-        <div className="advert_details">
-          <h2>Position: Secretary</h2>
-          <h3>Requirements & Benefits:</h3>
-          <ul>
-            <li>SSCE/ND/HND/Bsc.</li>
-            <li>
-              Must know how to use corel draw, photoshop, Microsoft office etc
-            </li>
-            <li>Can make 3 contents in one day</li>
-            <li>Ensure customer satisfaction experience</li>
-            <li>Applicant MUST be within Ibadan</li>
-            <li>
-              They will work within 1. Iwo road Ibadan 2. Aliiwo Gate Ibadan.
-            </li>
-          </ul>
-          <h3>Salary 35k</h3>
-          <h3>Closing Date: November 4, 2024</h3>
-          <button onClick={openPopup}>Apply Now</button>
-        </div>
-      </section>
+      {jobAdverts.map((job, index) => (
+        <section className="job_advert" key={index}>
+          <h1>We Are Hiring!</h1>
+          <div className="advert_details">
+            <h2>Position: {job.position}</h2>
+            <h3>Requirements & Benefits:</h3>
+            <ul>
+              {job.requirements.map((req, idx) => (
+                <li key={idx}>{req}</li>
+              ))}
+            </ul>
+            <h3>responsibilities:</h3>
+            <ul>
+              {job.responsibilities?.map((req, idx) => (
+                <li key={idx}>{req}</li>
+              ))}
+            </ul>
+            <h3>Salary: {job.salary}</h3>
+            <h3>Closing Date: {job.closingDate}</h3>
+            <button onClick={openPopup}>Apply Now</button>
+          </div>
+        </section>
+      ))}
 
       {isPopupOpen && (
         <div className="popup">
-          {waitForUpload && (<div className="loading_spinner"><h4>Please wait</h4></div>)}
+          {waitForUpload && (
+            <div className="loading_spinner">
+              <h4>Please wait</h4>
+            </div>
+          )}
           <div className="popup_content">
             <span className="close" onClick={closePopup}>
               &times;
@@ -206,6 +218,14 @@ const Job = () => {
                   <option value="nd">ND</option>
                   <option value="hnd">HND</option>
                   <option value="bsc">Bsc.</option>
+                </select>
+              </div>
+              <div className="form_field">
+                <label>Position</label>
+                <select name="qualification" required>
+                  {jobAdverts.map((job, index) => (
+                    <option value={job.position}>{job.position}</option>
+                  ))}
                 </select>
               </div>
               <div className="form_field">
