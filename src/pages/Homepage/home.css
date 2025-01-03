@@ -5,6 +5,13 @@
   background: #000;
 }
 
+.newyear_greeting {
+  width: 100%;
+  height: 500px;
+  object-fit: contain;
+  object-position: top;
+}
+
 .hero > img {
   width: 100%;
   height: 100%;
@@ -274,6 +281,14 @@
     /* height: auto; Adjust height for smaller screens */
     /* background: red; */
     height: 70vh;
+  }
+
+
+  .newyear_greeting {
+    width: 100%;
+    height: 390px;
+    object-fit: contain;
+    object-position: top;
   }
 
   .hero > .hero-content-container {

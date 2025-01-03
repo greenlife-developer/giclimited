@@ -13,6 +13,7 @@ import kolologoimg from "../../assets/companies/kolo.jpg";
 import rexayologoimg from "../../assets/companies/rexayo.jpg";
 import rosabon from "../../assets/companies/rosabon.jpg";
 import gfflogo from "../../assets/companies/gfflogo.jpg"
+import gic2025 from "../../assets/gic2025.jpg"
 import { Link } from "react-router-dom";
 
 const Home = () => {
@@ -51,6 +52,8 @@ const Home = () => {
           </div>
         </div>
       </div>
+
+      <img className="newyear_greeting" src={gic2025} alt="" />
 
       <section className="section_1">
         <div className="section_1_text">
