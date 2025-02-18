@@ -136,9 +136,9 @@ export default function SendMessage() {
     setLoading(true);
     selectedRows.forEach(async (index) => {
       const row = data[index];
-      console.log(
-        `Sending SMS to ${row["Mobile Number"]}: ${formatMessage(row)}`
-      );
+      // console.log(
+      //   `Sending SMS to ${row["Mobile Number"]}: ${formatMessage(row)}`
+      // );
       setLoading(true);
       try {
         const response = await axios.post(`${MULTITEXT_API_BASE}`, {
@@ -167,7 +167,7 @@ export default function SendMessage() {
       <ToastContainer />
       <Paper className="balance-card">
         <Typography variant="h6">
-          Balance: ₦{balance || "Loading..."}
+          Balance: {balance || "Loading..."} units
         </Typography>
         <Button onClick={fetchBalance} className="refresh-button">
           Refresh Balance
