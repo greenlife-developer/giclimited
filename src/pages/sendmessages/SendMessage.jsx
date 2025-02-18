@@ -1,19 +1,59 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
-import { Button, TextField, Input, CircularProgress } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Input,
+  CircularProgress,
+  Typography,
+  Paper,
+} from "@mui/material";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./sendmessage.css";
+import axios from "axios";
+
+const MULTITEXT_EMAIL = "yemijoshua81@gmail.com";
+const MULTITEXT_PASSWORD = "KaXEJg5bgSue$bJ";
+const MULTITEXT_API_BASE = "https://app.multitexter.com/v2/app/sms";
 
 export default function SendMessage() {
   const [data, setData] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [balance, setBalance] = useState(null);
   const [selectAll, setSelectAll] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [previewMessage, setPreviewMessage] = useState("");
   const [messageTemplate, setMessageTemplate] = useState(
     "Dear {Name}, your Access Bank Acct no {Account Number} has loan outstanding balance of ₦{Outstanding Balance} Please settle immediately to avoid further actions. For more information, contact recovery agent {DCA} on {Mobile Number}."
   );
   const [startRow, setStartRow] = useState(1);
   const [endRow, setEndRow] = useState(100);
+
+  useEffect(() => {
+    fetchBalance();
+  }, []);
+
+  const fetchBalance = async () => {
+    try {
+      const response = await axios.get(
+        `https://app.multitexter.com/v2/app/getbalance`,
+        {
+          params: { email: MULTITEXT_EMAIL, password: MULTITEXT_PASSWORD },
+        }
+      );
+      // console.log("Balance Response:", response.data);
+      if (response.data.status === 1) {
+        toast.success("Balance fetched successfully");
+        setBalance(response.data.amount);
+      } else {
+        toast.error(`Error fetching balance - ${response.data.msg}`);
+      }
+    } catch (error) {
+      console.error("Error fetching balance:", error);
+      toast.error("Error fetching balance");
+    }
+  };
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -39,6 +79,7 @@ export default function SendMessage() {
 
       setData(slicedData);
       setLoading(false);
+      toast.success("File uploaded successfully");
     };
 
     reader.readAsBinaryString(file);
@@ -48,23 +89,25 @@ export default function SendMessage() {
     setSelectedRows((prev) =>
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
     );
-  
+
     // Update the preview message with the first selected row
     if (data[index]) {
       setPreviewMessage(formatMessage(data[index]));
     }
   };
-  
+
   const handleSelectAll = () => {
     if (selectAll) {
       setSelectedRows([]);
     } else {
-      setSelectedRows(data.map((_, index) => {
-        if (data[index]) {
-          setPreviewMessage(formatMessage(data[0]));
-        }
-        return index
-      }));
+      setSelectedRows(
+        data.map((_, index) => {
+          if (data[index]) {
+            setPreviewMessage(formatMessage(data[0]));
+          }
+          return index;
+        })
+      );
     }
     setSelectAll(!selectAll);
   };
@@ -84,17 +127,55 @@ export default function SendMessage() {
     });
   };
 
-  const handleSendSMS = () => {
-    selectedRows.forEach((index) => {
+  const handleSendSMS = async () => {
+    if (selectedRows.length === 0) {
+      toast.warn("No recipients selected");
+      return;
+    }
+
+    setLoading(true);
+    selectedRows.forEach(async (index) => {
       const row = data[index];
       console.log(
         `Sending SMS to ${row["Mobile Number"]}: ${formatMessage(row)}`
       );
+      setLoading(true);
+      try {
+        const response = await axios.post(`${MULTITEXT_API_BASE}`, {
+          email: MULTITEXT_EMAIL,
+          password: MULTITEXT_PASSWORD,
+          message: formatMessage(row),
+          recipients: row["Mobile Number"],
+          sender_name: "REMINDER",
+        });
+        console.log("SMS Response:", response.data);
+        if (response.data.status === 1) {
+          toast.success(`SMS sent to ${row["Mobile Number"]}`);
+        } else {
+          toast.error(`Failed to send SMS to ${row["Mobile Number"]} - ${response.data.msg}`);
+        }
+      } catch (error) {
+        console.error("Error sending SMS:", error);
+        toast.error(`Failed to send SMS to ${row["Mobile Number"]}`);
+      }
+      setLoading(false);
     });
   };
 
   return (
     <div className="container">
+      <ToastContainer />
+      <Paper className="balance-card">
+        <Typography variant="h6">
+          Balance: ₦{balance || "Loading..."}
+        </Typography>
+        <Button onClick={fetchBalance} className="refresh-button">
+          Refresh Balance
+        </Button>
+      </Paper>
+      <br />
+      <br />
+
       <h1 className="title">Upload Excel & Send SMS</h1>
 
       <div className="row-inputs">
@@ -143,6 +224,9 @@ export default function SendMessage() {
         <h2 className="message-title">Message Template</h2>
         <TextField
           value={messageTemplate}
+          multiline
+          rows={3}
+          fullWidth
           onChange={(e) => setMessageTemplate(e.target.value)}
           className="message-input"
         />
@@ -166,9 +250,7 @@ export default function SendMessage() {
       </div>
 
       <div className="table-container">
-        <table
-          className="custom-table"
-        >
+        <table className="custom-table">
           <thead>
             <tr>
               <th>

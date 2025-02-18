@@ -7,6 +7,7 @@ import callicon from "../../assets/callicon.svg";
 import mailicon from "../../assets/mailicon.svg";
 import locationicon from "../../assets/locationicon.svg";
 import "./footer.css"
+import { Link } from "react-router-dom";
 
 
 const Footer = () => {
@@ -30,6 +31,7 @@ const Footer = () => {
                             <li>Audit Services in Nigeria</li>
                             <li>Strategy</li>
                             <li>Advisory services</li>
+                            <li><Link to="/sms">SMS</Link></li>
                         </ul>
                     </div>
                     <div className="footer_item">
