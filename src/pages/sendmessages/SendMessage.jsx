@@ -25,7 +25,7 @@ export default function SendMessage() {
   const [loading, setLoading] = useState(false);
   const [previewMessage, setPreviewMessage] = useState("");
   const [messageTemplate, setMessageTemplate] = useState(
-    "Dear {Name}, your Access Bank Acct no {Account Number} has loan outstanding balance of ₦{Outstanding Balance} Please settle immediately to avoid further actions. For more information, contact recovery agent {DCA} on {Mobile Number}."
+    "Dear {Name}, your Access Bank Acct no {Account Number} has a loan outstanding balance of ₦{Outstanding Balance} Please settle immediately to avoid further actions. For more information, contact recovery agent Bukola on 08107963179."
   );
   const [startRow, setStartRow] = useState(1);
   const [endRow, setEndRow] = useState(100);
