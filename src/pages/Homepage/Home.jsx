@@ -13,6 +13,8 @@ import kolologoimg from "../../assets/companies/kolo.jpg";
 import rexayologoimg from "../../assets/companies/rexayo.jpg";
 import rosabon from "../../assets/companies/rosabon.jpg";
 import gfflogo from "../../assets/companies/gfflogo.jpg"
+import union from "../../assets/companies/union.png"
+import oxygen_x from "../../assets/companies/oxygen_x.png"
 import gic2025 from "../../assets/gic2025.jpg"
 import { Link } from "react-router-dom";
 
@@ -22,7 +24,9 @@ const Home = () => {
     kolologoimg,
     rexayologoimg,
     rosabon,
-    gfflogo
+    gfflogo,
+    union,
+    oxygen_x
   ];
 
   return (
@@ -53,7 +57,7 @@ const Home = () => {
         </div>
       </div>
 
-      <img className="newyear_greeting" src={gic2025} alt="" />
+      {/* <img className="newyear_greeting" src={gic2025} alt="" /> */}
 
       <section className="section_1">
         <div className="section_1_text">

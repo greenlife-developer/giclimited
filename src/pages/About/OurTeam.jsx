@@ -27,13 +27,6 @@ const OurTeam = () => {
         "Her expertise in Accounting and Administration makes her a round peg in a round hole.She holds a degree in Accounting from the National Open University of Nigeria, demonstrating her strong foundation in financial management and governance. As Company Secretary, AJAO TOLUWANI BUKOLA is responsible for ensuring the efficient administration of the company, maintaining accurate records, and providing exceptional support to the Managing Director and the board of directors. Her strong organizational skills, attention to detail, and excellent communication abilities make her a valuable asset to the team. AJAO TOLUWANI BUKOLA is committed to upholding the highest standards of corporate governance and ensuring the company's compliance with regulatory requirements. Her expertise in accounting and administration has been instrumental in driving the company's growth and success. With her strong work ethic and dedication, AJAO TOLUWANI BUKOLA is an integral part of the GREAT IBSOL CONSULTANCY LIMITED team.",
     },
     {
-      image: nurudeenimg,
-      name: "Mufutau Nurudeen Adeshola",
-      position: "Head of Credit Risk Management",
-      details:
-        "Mufutau Nurudeen Adeshola is a graduate of accountancy from the prestigious Babcock University, Ilishan Remo. He is a seasoned microfinance banker with over 10 years' experience in loan origination, disbursements and recovery of overdue loans. He worked in wealth department of the banking industry before proceeding to work in credit risk department to do the following works- Review of loan request. Cutting down the risk of exposure to bearest minimum, Produce and review quarterly reports. Analyze active loan files on a regular basis and recommend solutions to speed up the loan process. Make decisions about customer credit applications using a range of criteria including purpose of application, credit viability, customer payment history and credit-worthiness.",
-    },
-    {
       image: obasaimg,
       name: "Adesile Obasa",
       position: "Company Legal Consultant",
