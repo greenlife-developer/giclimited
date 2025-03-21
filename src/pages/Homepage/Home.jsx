@@ -23,7 +23,7 @@ const Home = () => {
     accesslogoimg,
     kolologoimg,
     rexayologoimg,
-    rosabon,
+    // rosabon,
     gfflogo,
     union,
     oxygen_x
