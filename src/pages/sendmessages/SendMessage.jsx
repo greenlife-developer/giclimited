@@ -25,7 +25,7 @@ export default function SendMessage() {
   const [loading, setLoading] = useState(false);
   const [previewMessage, setPreviewMessage] = useState("");
   const [messageTemplate, setMessageTemplate] = useState(
-    "Dear {Name}, your Access Bank Acct no {Account Number} has a loan outstanding balance of ₦{Outstanding Balance} Please settle immediately to avoid further actions. For more information, contact recovery agent Bukola on 08107963179."
+    "Dear {Name}, your Access Bank Acct no {Account Number} has loan outstanding balance of ₦{OUTSTANDING BALANCE}. Please settle on or before Tuesday 22/04/2025 to avoid further recovery actions which might include the application of GSI on all your other banks accounts. For more information, contact recovery agent Bukola on 09122388447"
   );
   const [startRow, setStartRow] = useState(1);
   const [endRow, setEndRow] = useState(100);
@@ -152,7 +152,9 @@ export default function SendMessage() {
         if (response.data.status === 1) {
           toast.success(`SMS sent to ${row["Mobile Number"]}`);
         } else {
-          toast.error(`Failed to send SMS to ${row["Mobile Number"]} - ${response.data.msg}`);
+          toast.error(
+            `Failed to send SMS to ${row["Mobile Number"]} - ${response.data.msg}`
+          );
         }
       } catch (error) {
         console.error("Error sending SMS:", error);
