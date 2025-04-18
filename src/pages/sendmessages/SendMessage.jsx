@@ -25,7 +25,10 @@ export default function SendMessage() {
   const [loading, setLoading] = useState(false);
   const [previewMessage, setPreviewMessage] = useState("");
   const [messageTemplate, setMessageTemplate] = useState(
-    "Dear {Name}, your Access Bank Acct no {Account Number} has loan outstanding balance of ₦{OUTSTANDING BALANCE}. Please settle on or before Tuesday 22/04/2025 to avoid further recovery actions which might include the application of GSI on all your other banks accounts. For more information, contact recovery agent Bukola on 09122388447"
+    // "Dear {Name}, your Access Bank Acct no {Account Number} has loan outstanding balance of ₦{OUTSTANDING BALANCE}. Please settle on or before Tuesday 22/04/2025 to avoid further recovery actions which might include the application of GSI on all your other banks accounts. For more information, contact recovery agent Bukola on 09122388447",
+    // "Testing message sending",
+    // "Dear {Name}, Your Access Bank Acct: {Account Number} has ₦{OUTSTANDING BALANCE} outstanding. Kindly pay on or before 22/04/2025 to avoid recovery actions. Contact Bukola 09122388447.",
+    "{Name}, your Access Bank acct {Account Number} owes ₦{OUTSTANDING BALANCE}. Pay by 24/04/25 to avoid auto debit. Call Bukola 09122388447 now."
   );
   const [startRow, setStartRow] = useState(1);
   const [endRow, setEndRow] = useState(100);
@@ -33,6 +36,13 @@ export default function SendMessage() {
   useEffect(() => {
     fetchBalance();
   }, []);
+
+  const calculatePages = (message) => {
+    const messageLength = message.length;
+    const pages = Math.ceil(messageLength / 160); // Divide by 160 and round up
+    console.log(`Message Length: ${messageLength}, Pages: ${pages}`);
+    return pages;
+  };
 
   const fetchBalance = async () => {
     try {
@@ -93,6 +103,9 @@ export default function SendMessage() {
     // Update the preview message with the first selected row
     if (data[index]) {
       setPreviewMessage(formatMessage(data[index]));
+
+      const pages = calculatePages(formatMessage);
+      console.log(`This message will take ${pages} page(s).`);
     }
   };
 
@@ -120,9 +133,14 @@ export default function SendMessage() {
       );
       let value = cleanKey ? row[cleanKey] : "";
 
+      if (cleanKey.toLowerCase() === "name") {
+        return value ? value.toString().split(" ")[0] : "";
+      }
+
       if (cleanKey.toLowerCase() === "outstanding balance") {
         return value ? `${Number(value).toLocaleString()}` : "₦0.00";
       }
+      console.log(String(value).length);
       return value !== undefined ? String(value) : "";
     });
   };
@@ -146,7 +164,7 @@ export default function SendMessage() {
           password: MULTITEXT_PASSWORD,
           message: formatMessage(row),
           recipients: row["Mobile Number"],
-          sender_name: "REMINDER",
+          sender_name: "ReMiNDERz",
         });
         console.log("SMS Response:", response.data);
         if (response.data.status === 1) {
@@ -241,6 +259,9 @@ export default function SendMessage() {
           <div className="preview-container">
             <h3>Preview Message</h3>
             <p className="preview-message">{previewMessage}</p>
+            <p className="message-length">
+              This message will take {calculatePages(previewMessage)} page(s).
+            </p>
           </div>
         )}
 
