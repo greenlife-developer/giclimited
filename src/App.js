@@ -11,6 +11,7 @@ import Audits from './pages/audits/Audits';
 import Strategy from './pages/strategy/Strategy';
 import Advisory from './pages/advisory/Advisory';
 import SendMessage from './pages/sendmessages/SendMessage';
+import Calling from './pages/calling/Calling';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/advisory" element={<Advisory />} />
           <Route path="/advisory/:id" element={<Advisory />} />
           <Route path="/sms/" element={<SendMessage />} />
+          <Route path="/calling" element={<Calling />} />
         </Routes>
       </BrowserRouter>
     </div>

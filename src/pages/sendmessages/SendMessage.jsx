@@ -25,10 +25,7 @@ export default function SendMessage() {
   const [loading, setLoading] = useState(false);
   const [previewMessage, setPreviewMessage] = useState("");
   const [messageTemplate, setMessageTemplate] = useState(
-    // "Dear {Name}, your Access Bank Acct no {Account Number} has loan outstanding balance of ₦{OUTSTANDING BALANCE}. Please settle on or before Tuesday 22/04/2025 to avoid further recovery actions which might include the application of GSI on all your other banks accounts. For more information, contact recovery agent Bukola on 09122388447",
-    // "Testing message sending",
-    // "Dear {Name}, Your Access Bank Acct: {Account Number} has ₦{OUTSTANDING BALANCE} outstanding. Kindly pay on or before 22/04/2025 to avoid recovery actions. Contact Bukola 09122388447.",
-    "{Name}, your Access Bank acct {Account Number} owes ₦{OUTSTANDING BALANCE}. Pay by 24/04/25 to avoid auto debit. Call Bukola 09122388447 now."
+    "{Name}, your Access Bank acct {Account Number} owes ₦{OUTSTANDING BALANCE}. Pay by 24/04/25 to avoid further serious recovery actions. Call Bukola 09122388447 now."
   );
   const [startRow, setStartRow] = useState(1);
   const [endRow, setEndRow] = useState(100);
