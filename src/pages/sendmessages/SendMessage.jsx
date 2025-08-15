@@ -25,7 +25,7 @@ export default function SendMessage() {
   const [loading, setLoading] = useState(false);
   const [previewMessage, setPreviewMessage] = useState("");
   const [messageTemplate, setMessageTemplate] = useState(
-    "{CUSTOMER_NAME}, your Access Bank acct {SETTLEMENT_ACCOUNT} owes ₦{UNPAID}. Pay by 24/04/25 to avoid further serious recovery actions. Call Bukola 09122388447 now."
+    "{CUSTOMER_NAME}, your Access Bank acct {SETTLEMENT_ACCOUNT} owes ₦{UNPAID}. Pay by 19/08/25 to avoid further serious recovery actions. Call Bukola 09122388447 now."
   );
   const [startRow, setStartRow] = useState(1);
   const [endRow, setEndRow] = useState(100);
@@ -130,7 +130,7 @@ export default function SendMessage() {
       );
       let value = cleanKey ? row[cleanKey] : "";
 
-      if (cleanKey.toLowerCase() === "name") {
+      if (cleanKey.toLowerCase() === "customer_name") {
         return value ? value.toString().split(" ")[0] : "";
       }
 
