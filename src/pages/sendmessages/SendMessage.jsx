@@ -25,7 +25,7 @@ export default function SendMessage() {
   const [loading, setLoading] = useState(false);
   const [previewMessage, setPreviewMessage] = useState("");
   const [messageTemplate, setMessageTemplate] = useState(
-    "{Name}, your Access Bank acct {Account Number} owes ₦{OUTSTANDING BALANCE}. Pay by 24/04/25 to avoid further serious recovery actions. Call Bukola 09122388447 now."
+    "{CUSTOMER_NAME}, your Access Bank acct {SETTLEMENT_ACCOUNT} owes ₦{UNPAID}. Pay by 24/04/25 to avoid further serious recovery actions. Call Bukola 09122388447 now."
   );
   const [startRow, setStartRow] = useState(1);
   const [endRow, setEndRow] = useState(100);
@@ -160,20 +160,20 @@ export default function SendMessage() {
           email: MULTITEXT_EMAIL,
           password: MULTITEXT_PASSWORD,
           message: formatMessage(row),
-          recipients: row["Mobile Number"],
+          recipients: row["PHONE NUMBER"],
           sender_name: "ReMiNDERz",
         });
         console.log("SMS Response:", response.data);
         if (response.data.status === 1) {
-          toast.success(`SMS sent to ${row["Mobile Number"]}`);
+          toast.success(`SMS sent to ${row["PHONE NUMBER"]}`);
         } else {
           toast.error(
-            `Failed to send SMS to ${row["Mobile Number"]} - ${response.data.msg}`
+            `Failed to send SMS to ${row["PHONE NUMBER"]} - ${response.data.msg}`
           );
         }
       } catch (error) {
         console.error("Error sending SMS:", error);
-        toast.error(`Failed to send SMS to ${row["Mobile Number"]}`);
+        toast.error(`Failed to send SMS to ${row["PHONE NUMBER"]}`);
       }
       setLoading(false);
     });
