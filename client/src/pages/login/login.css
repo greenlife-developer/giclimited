@@ -1,0 +1,19 @@
+.i-container {
+    padding:  1rem 0;
+}
+
+.f-container {
+    padding:  1rem ;
+}
+
+.gic-mb {
+    margin-bottom: .3rem;
+}
+
+.form-group {
+    margin: .5rem 0;
+}
+
+.form-group label{
+    margin-bottom: .3rem;
+}
