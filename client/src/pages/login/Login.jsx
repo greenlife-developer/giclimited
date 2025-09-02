@@ -30,13 +30,22 @@ const Login = () => {
       await dispatch(SET_NAME(data.agent.displayName));
       await dispatch(SET_AGENT(data));
 
+      
+    const agentUrl = "/calls";
+    const adminUrl = "/calls-admin";
+
       const queryParams = new URLSearchParams(location.search);
       const redirectUrl = queryParams.get("redirect_url");
 
       if (redirectUrl) {
         navigate(redirectUrl);
       } else {
-        navigate("/dashboard");
+        if (data.agent.role === "admin") {
+          navigate(adminUrl);
+        }
+        if (data.agent.role === "agent") {
+          navigate(agentUrl);
+        }
       }
       setIsLoading(false);
     } catch (error) {

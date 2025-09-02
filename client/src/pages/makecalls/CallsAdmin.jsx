@@ -1,16 +1,26 @@
 import React, { useState, useEffect } from "react";
 import * as XLSX from "xlsx";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./makecalls.css";
 import { uploadContacts } from "../../services/contactService";
+import { useLocation, useNavigate } from "react-router-dom";
+import useRedirectLoggedOutUser from "../../hooks/useRedirectLoggedOutUsers";
+import { getLoginStatus } from "../../services/authService";
+import { SET_LOGIN } from "../../redux/features/auth/authSlice";
+import { toast } from "sonner";
 
 const CallsAdmin = () => {
+  const location = useLocation();
+  useRedirectLoggedOutUser(`/login?redirect_url=${location.pathname}`);
+
   const { agent } = useSelector((state) => state.auth);
 
   const [contacts, setContacts] = useState([]);
   const [filter, setFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 20; // 20 contacts per page
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Fetch contacts from backend
   useEffect(() => {
@@ -25,6 +35,20 @@ const CallsAdmin = () => {
     };
     fetchContacts();
   }, []);
+
+  useEffect(() => {
+    const redirectNonAdmin = async () => {
+      const isLoggedIn = await getLoginStatus();
+      dispatch(SET_LOGIN(isLoggedIn));
+
+      if (!isLoggedIn || agent.agent.role !== "admin") {
+        toast.info("Only admins can access this page. Please login.");
+        navigate("/calls");
+        return;
+      }
+    };
+    redirectNonAdmin();
+  }, [navigate, dispatch, agent]);
 
   // Sorting: called first
   const sortedContacts = [...contacts].sort((a, b) => {

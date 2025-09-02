@@ -8,7 +8,7 @@ import { Server } from "socket.io";
 import path from "path";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-// import { fileURLToPath } from "url";
+import { fileURLToPath } from "url";
 
 import { config } from "./config.js";
 import { connectDB } from "./utils/db.js";
@@ -28,7 +28,9 @@ app.use(express.json({ limit: "1000mb" }));
 app.use(cors({
   origin: (origin, callback) => {
     const allowedOrigins = [
-      "http://localhost:3000", 
+      "http://localhost:3000",
+      "http://localhost:4000",
+      "https://giclimited1.onrender.com/",
     ];
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
@@ -50,23 +52,23 @@ app.use("/api/contacts", contactRoute);
 // app.use("/api/calls", callsRouter);
 
 // --------------------------deployment on heroku------------------------------
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// if (
-//   process.env.NODE_ENV === "production" ||
-//   process.env.NODE_ENV === "staging"
-// ) {
-//   app.use(express.static(path.join(__dirname, "/client/build")));
+if (
+  process.env.NODE_ENV === "production" ||
+  process.env.NODE_ENV === "staging"
+) {
+  app.use(express.static(path.join(__dirname, "/client/build")));
 
-//   app.get("/*", function (req, res) {
-//     res.sendFile(path.join(__dirname, "/client/build", "index.html"));
-//   });
-// } else {
-//   app.get("/", (req, res) => {
-//     res.send("API is running..");
-//   });
-// }
+  app.get("/{*splat}", function (req, res) {
+    res.sendFile(path.join(__dirname, "/client/build", "index.html"));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is running..");
+  });
+}
 
 // --------------------------deployment------------------------------
 
