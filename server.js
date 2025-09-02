@@ -30,7 +30,7 @@ app.use(cors({
     const allowedOrigins = [
       "http://localhost:3000",
       "http://localhost:4000",
-      "https://giclimited1.onrender.com/",
+      "https://giclimited1.onrender.com",
     ];
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
