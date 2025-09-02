@@ -31,6 +31,8 @@ app.use(cors({
       "http://localhost:3000",
       "http://localhost:4000",
       "https://giclimited1.onrender.com",
+      "https://www.giclimited.net",
+      "*"
     ];
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
