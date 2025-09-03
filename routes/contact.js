@@ -3,22 +3,48 @@ import Contact from "../models/Contact.js";
 
 export const contactRoute = express.Router();
 
+// contactRoute.get("/", async (req, res) => {
+//   try {
+//     const contacts = await Contact.find().sort({ STATUS: -1 }); // Called first
+//     res.json(contacts);
+//   } catch (err) {
+//     res
+//       .status(500)
+//       .json({ message: "Error fetching contacts", error: err.message });
+//   }
+// });
+
 contactRoute.get("/", async (req, res) => {
   try {
-    const contacts = await Contact.find().sort({ STATUS: -1 }); // Called first
+    const contacts = await Contact.aggregate([
+      {
+        $addFields: {
+          unpaidNumeric: { $toDouble: "$UNPAID" } 
+        }
+      },
+      {
+        $sort: {
+          STATUS: -1,      
+          unpaidNumeric: -1
+        }
+      }
+    ]);
+
     res.json(contacts);
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Error fetching contacts", error: err.message });
+    res.status(500).json({
+      message: "Error fetching contacts",
+      error: err.message,
+    });
   }
 });
+
 
 // @route   POST /api/contacts/upload
 contactRoute.post("/upload", async (req, res) => {
   try {
     const contacts = req.body; // JSON from frontend Excel parse
-    console.log("CONTACTS: ", contacts);
+    // console.log("CONTACTS: ", contacts);
     if (!Array.isArray(contacts)) {
       return res.status(400).json({ message: "Invalid data format" });
     }
@@ -42,11 +68,12 @@ contactRoute.post("/upload", async (req, res) => {
 
 // @route   PATCH /api/contacts/:id/call
 contactRoute.post("/:id/call", async (req, res) => {
+  // console.log("Marking contact as called, note: ", req.body.agent);
   try {
     const { id } = req.params;
     const contact = await Contact.findByIdAndUpdate(
       id,
-      { STATUS: "Called", LAST_CALLED: new Date() },
+      { STATUS: "Called", LAST_CALLED: new Date(), NOTE: req.body.note || "N/A", AGENT: req.body.agent.id || null },
       { new: true }
     );
     res.json(contact);

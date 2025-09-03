@@ -1,15 +1,10 @@
 import axios from "axios";
 import { toast } from "sonner";
 
-const BACKEND_URL = "";
+const BACKEND_URL = `http://localhost:4000`;
 
-/**
- * Upload contacts in batches
- * @param {Array} contacts - full contacts array
- * @param {Number} batchSize - number of contacts per request
- */
 export const uploadContacts = async (contacts) => {
-  console.log("CONTACTS SERVICE: total contacts = ", contacts.length);
+  // console.log("CONTACTS SERVICE: ", contacts);
   const batchSize = 200;
 
   try {
@@ -45,12 +40,14 @@ export const uploadContacts = async (contacts) => {
   }
 };
 
-export const markContactAsCalled = async (contactId) => {
+export const markContactAsCalled = async (contactId, note, agent) => {
   try {
     const response = await axios.post(
       `${BACKEND_URL}/api/contacts/${contactId}/call`,
-      {}
+      { note, agent: agent ? agent.agent : null },
+      { withCredentials: true }
     );
+    console.log("Response from marking called: ", response);
     return response.data;
   } catch (error) {
     const message =

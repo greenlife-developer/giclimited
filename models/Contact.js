@@ -22,10 +22,15 @@ const ContactSchema = new mongoose.Schema(
     PHONE_NUMBER: String,
     ADDRESS: String,
     EMAIL_ADDRESS: String,
-    STATUS: { type: String, enum: ["Called", "Not Called"], default: "Not Called" },
+    STATUS: {
+      type: String,
+      enum: ["Called", "Not Called"],
+      default: "Not Called",
+    },
     RECORDING: { type: String, default: "N/A" },
     LAST_CALLED: { type: Date, default: null },
-    NOTES: [{ body: String, createdAt: { type: Date, default: Date.now } }],
+    NOTE: { type: String, default: "N/A" },
+    AGENT: { type: mongoose.Schema.Types.ObjectId, ref: "Agent", default: null },
   },
   { timestamps: true }
 );

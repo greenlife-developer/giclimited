@@ -12,6 +12,7 @@ const Calls = () => {
   const { agent } = useSelector((state) => state.auth);
 
   const [contacts, setContacts] = useState([]);
+  const [activeTab, setActiveTab] = useState("all"); // "all" | "my"
 
   // Fetch contacts from backend
   useEffect(() => {
@@ -31,25 +32,25 @@ const Calls = () => {
   const [note, setNote] = useState("");
   const [recording, setRecording] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 20; // 20 contacts per page
+  const pageSize = 20;
 
-  // Pagination state
-  const itemsPerPage = 5;
-
-  // Sorting: called first
+  // Sorting: "Called" goes last
   const sortedContacts = [...contacts].sort((a, b) => {
     if (a.STATUS === "Called" && b.STATUS !== "Called") return 1;
     if (a.STATUS !== "Called" && b.STATUS === "Called") return -1;
     return 0;
   });
 
-  const indexOfLast = currentPage * itemsPerPage;
-  const indexOfFirst = indexOfLast - itemsPerPage;
+  // Filter by tab
+  const filteredContacts =
+    activeTab === "my"
+      ? sortedContacts.filter((c) => c.AGENT === agent.agent.id)
+      : sortedContacts;
 
-  // Pagination logic
-  const totalPages = Math.ceil(sortedContacts.length / pageSize);
+  // Pagination
+  const totalPages = Math.ceil(filteredContacts.length / pageSize);
   const startIndex = (currentPage - 1) * pageSize;
-  const currentContacts = sortedContacts.slice(
+  const currentContacts = filteredContacts.slice(
     startIndex,
     startIndex + pageSize
   );
@@ -58,7 +59,7 @@ const Calls = () => {
     setSelectedContact(contact);
     const updated = contacts.map((c) =>
       c.CUST_ID === contact.CUST_ID
-        ? { ...c, STATUS: "Called", LAST_CALLED: new Date().toLocaleString() }
+        ? { ...c, STATUS: "Called", LAST_CALLED: new Date().toLocaleString(), AGENT: agent.id }
         : c
     );
     setContacts(updated);
@@ -73,7 +74,8 @@ const Calls = () => {
     );
     setContacts(updated);
 
-    await markContactAsCalled(selectedContact._id);
+    console.log("Saving note for contact:", selectedContact._id, note);
+    await markContactAsCalled(selectedContact._id, note, agent);
 
     setNote("");
     setRecording(null);
@@ -81,26 +83,12 @@ const Calls = () => {
   };
 
   const headers = [
-    "CUST_ID",
     "CUSTOMER_NAME",
-    "REF_NO",
     "SETTLEMENT_ACCOUNT",
-    "PRODUCT_NAME",
-    "PRODUCT_CODE",
     "PRODUCT",
-    "LOAN_AMOUNT_LCY",
-    "TOTAL_EXPOSURE_LCY",
     "UNPAID",
-    "DCAs",
-    "DPD",
-    "RANGE",
-    "TENOR",
-    "RATE",
-    "BOOKING_DATE",
-    "MATURITY_DATE",
     "PHONE_NUMBER",
     "ADDRESS",
-    "EMAIL_ADDRESS",
     "STATUS",
     "NOTE",
     "RECORDING",
@@ -113,15 +101,12 @@ const Calls = () => {
     }
   };
 
-  // Pagination Controls
   const renderPagination = () => {
     const pages = [];
     const windowSize = 4;
-
     let start = Math.max(2, currentPage - windowSize);
     let end = Math.min(totalPages - 1, currentPage + windowSize);
 
-    // Always include first page
     if (currentPage > 1) {
       pages.push(
         <button
@@ -138,7 +123,6 @@ const Calls = () => {
       );
     }
 
-    // Left ellipsis
     if (start > 2) {
       pages.push(
         <span key="left-ellipsis" className="px-2">
@@ -147,7 +131,6 @@ const Calls = () => {
       );
     }
 
-    // Page range
     for (let i = start; i <= end; i++) {
       pages.push(
         <button
@@ -164,7 +147,6 @@ const Calls = () => {
       );
     }
 
-    // Right ellipsis
     if (end < totalPages - 1) {
       pages.push(
         <span key="right-ellipsis" className="px-2">
@@ -173,7 +155,6 @@ const Calls = () => {
       );
     }
 
-    // Always include last page
     if (totalPages > 1 && currentPage < totalPages) {
       pages.push(
         <button
@@ -205,6 +186,37 @@ const Calls = () => {
       </div>
       <br />
 
+      {/* Tabs */}
+      <div className="flex gap-4 mb-4">
+        <button
+          onClick={() => {
+            setActiveTab("all");
+            setCurrentPage(1);
+          }}
+          className={`px-4 py-2 rounded-lg ${
+            activeTab === "all"
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 hover:bg-gray-300"
+          }`}
+        >
+          All Contacts
+        </button>
+        <button
+          onClick={() => {
+            setActiveTab("my");
+            setCurrentPage(1);
+          }}
+          className={`px-4 py-2 rounded-lg ${
+            activeTab === "my"
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 hover:bg-gray-300"
+          }`}
+        >
+          My Calls
+        </button>
+      </div>
+      <br />
+
       {/* Table */}
       <div className="bg-white shadow rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
@@ -224,31 +236,6 @@ const Calls = () => {
                 </th>
               </tr>
             </thead>
-            {/* <tbody>
-              {currentContacts.map((contact) => (
-                <tr key={contact.CUST_ID} className="hover:bg-gray-50">
-                  {headers.map((head) => (
-                    <td
-                      key={head}
-                      className="gic-td px-4 py-2 border border-gray-200 align-top"
-                    >
-                      {contact[head.replace(" ", "_")] || ""}
-                    </td>
-                  ))}
-                  <td className="gic-td px-4 py-2 border border-gray-200 sticky right-0 bg-white shadow-lg flex gap-2">
-                    <button
-                      onClick={() => handleCall(contact)}
-                      className="px-3 py-1 bg-green-500 text-white rounded-lg"
-                    >
-                      Call
-                    </button>
-                    <button className="px-3 py-1 bg-blue-500 text-white rounded-lg">
-                      Edit
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody> */}
             <tbody>
               {currentContacts.map((contact) => (
                 <tr key={contact.CUST_ID} className="hover:bg-gray-50">
@@ -287,6 +274,7 @@ const Calls = () => {
             </tbody>
           </table>
         </div>
+        <br />
 
         {/* Pagination */}
         <div className="flex justify-center items-center mt-4 gap-2">
@@ -310,6 +298,7 @@ const Calls = () => {
         </div>
         <br />
       </div>
+      <br />
 
       {/* Call Popup */}
       {selectedContact && (
@@ -336,7 +325,7 @@ const Calls = () => {
               placeholder="Enter your note here..."
             />
 
-              {/* Recording Upload */}
+            {/* Recording Upload */}
             <input
               type="file"
               accept="audio/*"

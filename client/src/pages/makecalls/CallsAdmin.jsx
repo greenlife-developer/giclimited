@@ -43,6 +43,7 @@ const CallsAdmin = () => {
 
       if (!isLoggedIn || agent.agent.role !== "admin") {
         toast.info("Only admins can access this page. Please login.");
+        alert("Only admins can access this page. Please login.");
         navigate("/calls");
         return;
       }
@@ -50,8 +51,17 @@ const CallsAdmin = () => {
     redirectNonAdmin();
   }, [navigate, dispatch, agent]);
 
+  // Apply filter
+  let filteredContacts = [...contacts];
+  if (filter === "called") {
+    filteredContacts = contacts.filter((c) => c.STATUS === "Called");
+  }
+  if (filter === "notCalled") {
+    filteredContacts = contacts.filter((c) => c.STATUS !== "Called");
+  }
+
   // Sorting: called first
-  const sortedContacts = [...contacts].sort((a, b) => {
+  const sortedContacts = [...filteredContacts].sort((a, b) => {
     if (a.STATUS === "Called" && b.STATUS !== "Called") return -1;
     if (a.STATUS !== "Called" && b.STATUS === "Called") return 1;
     return 0;
@@ -80,7 +90,6 @@ const CallsAdmin = () => {
     }
   };
 
-  // Upload Excel
   const handleUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -88,12 +97,22 @@ const CallsAdmin = () => {
     const data = await file.arrayBuffer();
     const workbook = XLSX.read(data);
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-    const json = XLSX.utils.sheet_to_json(worksheet);
+
+    const rawJson = XLSX.utils.sheet_to_json(worksheet);
+
+    const cleanedJson = rawJson.map((row) => {
+      return Object.fromEntries(
+        Object.entries(row).map(([key, value]) => [
+          key.trim().replace(/\s+/g, "_"), // " EMAIL ADDRESS " → "EMAIL_ADDRESS"
+          value,
+        ])
+      );
+    });
 
     try {
-      await uploadContacts(json); // from contactService.js
+      await uploadContacts(cleanedJson); // from contactService.js
       alert("Upload successful");
-      setContacts(json); // refresh locally (or refetch)
+      setContacts(cleanedJson); // refresh locally (or refetch)
       setCurrentPage(1); // reset pagination
     } catch (err) {
       console.error("Upload failed:", err);
@@ -115,29 +134,15 @@ const CallsAdmin = () => {
   };
 
   const headers = [
-    "CUST_ID",
     "CUSTOMER_NAME",
-    "REF_NO",
     "SETTLEMENT_ACCOUNT",
-    "PRODUCT_NAME",
-    "PRODUCT_CODE",
     "PRODUCT",
-    "LOAN_AMOUNT_LCY",
-    "TOTAL_EXPOSURE_LCY",
     "UNPAID",
-    "DCAs",
-    "DPD",
-    "RANGE",
-    "TENOR",
-    "RATE",
-    "BOOKING_DATE",
-    "MATURITY_DATE",
     "PHONE_NUMBER",
     "ADDRESS",
-    "EMAIL_ADDRESS",
     "STATUS",
     "RECORDING",
-    "NOTES",
+    "NOTE",
     "LAST_CALLED",
   ];
 
