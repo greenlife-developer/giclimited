@@ -89,9 +89,10 @@ const Calls = () => {
           }
         : c
     );
-    await callInitiated(contact._id, agent);
     setContacts(updated);
     window.location.href = `tel:${contact.PHONE_NUMBER}`;
+
+    await callInitiated(contact._id);
   };
 
   const handleSaveNote = async () => {

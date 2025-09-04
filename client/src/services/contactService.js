@@ -59,7 +59,7 @@ export const markContactAsCalled = async (contactId, note, agent) => {
   }
 };
 
-export const callInitiated = async (contactId, agent) => {
+export const callInitiated = async (contactId) => {
   try {
     const response = await axios.post(
       `${BACKEND_URL}/api/contacts/${contactId}/call-initiated`,
