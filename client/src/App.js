@@ -1,7 +1,7 @@
-import { useDispatch, useSelector, Provider } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { getLoginStatus } from "./services/authService";
-// import { Toaster } from "./components/ui/toaster";
-// import { Toaster as Sonner } from "./components/ui/sonner";
+import { Toaster, toast } from 'sonner';
 
 import About from "./pages/About/About";
 import CoreValues from "./pages/About/CoreValues";
@@ -20,7 +20,6 @@ import Calling from "./pages/calling/Calling";
 import AdminDashboard from "./pages/calling/Admin";
 import Login from "./pages/login/Login";
 import Calls from "./pages/makecalls/Calls";
-import { useEffect } from "react";
 import { SET_LOGIN } from "./redux/features/auth/authSlice";
 import axios from "axios";
 import CallsAdmin from "./pages/makecalls/CallsAdmin";
@@ -40,8 +39,7 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Toaster /> */}
-      {/* <Sonner /> */}
+      <Toaster />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />

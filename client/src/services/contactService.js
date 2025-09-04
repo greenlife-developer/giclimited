@@ -1,7 +1,7 @@
 import axios from "axios";
 import { toast } from "sonner";
 
-const BACKEND_URL = `http://localhost:4000`;
+const BACKEND_URL = ``;
 
 export const uploadContacts = async (contacts) => {
   // console.log("CONTACTS SERVICE: ", contacts);

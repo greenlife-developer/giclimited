@@ -98,7 +98,7 @@ const Calls = () => {
   const handleSaveNote = async () => {
     const updated = contacts.map((c) =>
       c.CUST_ID === selectedContact.CUST_ID
-        ? { ...c, NOTE: note, RECORDING: recording?.name || "N/A" }
+        ? { ...c, NOTE: note, STATUS: "Called", RECORDING: recording?.name || "N/A" }
         : c
     );
     setContacts(updated);
