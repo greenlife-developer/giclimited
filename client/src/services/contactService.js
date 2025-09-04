@@ -58,3 +58,22 @@ export const markContactAsCalled = async (contactId, note, agent) => {
     throw new Error(message);
   }
 };
+
+export const callInitiated = async (contactId, agent) => {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/api/contacts/${contactId}/call-initiated`,
+      {},
+      { withCredentials: true }
+    );
+    // console.log("Response from marking call initiated: ", response);
+    return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    toast.error(message);
+    throw new Error(message);
+  }
+};

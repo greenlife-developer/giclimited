@@ -24,7 +24,7 @@ const ContactSchema = new mongoose.Schema(
     EMAIL_ADDRESS: String,
     STATUS: {
       type: String,
-      enum: ["Called", "Not Called"],
+      enum: ["Called", "Not Called", "Call Initiated"],
       default: "Not Called",
     },
     RECORDING: { type: String, default: "N/A" },

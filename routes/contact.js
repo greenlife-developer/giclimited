@@ -3,17 +3,6 @@ import Contact from "../models/Contact.js";
 
 export const contactRoute = express.Router();
 
-// contactRoute.get("/", async (req, res) => {
-//   try {
-//     const contacts = await Contact.find().sort({ STATUS: -1 }); // Called first
-//     res.json(contacts);
-//   } catch (err) {
-//     res
-//       .status(500)
-//       .json({ message: "Error fetching contacts", error: err.message });
-//   }
-// });
-
 contactRoute.get("/", async (req, res) => {
   try {
     const contacts = await Contact.aggregate([
@@ -74,6 +63,24 @@ contactRoute.post("/:id/call", async (req, res) => {
     const contact = await Contact.findByIdAndUpdate(
       id,
       { STATUS: "Called", LAST_CALLED: new Date(), NOTE: req.body.note || "N/A", AGENT: req.body.agent.id || null },
+      { new: true }
+    );
+    res.json(contact);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error updating contact", error: err.message });
+  }
+});
+
+// @route   POST /api/contacts/:id/call-initiated
+contactRoute.post("/:id/call-initiated", async (req, res) => {
+  // console.log("Marking contact as called, note: ", req.body.agent);
+  try {
+    const { id } = req.params;
+    const contact = await Contact.findByIdAndUpdate(
+      id,
+      { STATUS: "Call Initiated", LAST_CALLED: new Date() },
       { new: true }
     );
     res.json(contact);

@@ -1,13 +1,27 @@
 import React, { useEffect, useState } from "react";
 import "./makecalls.css";
 import useRedirectLoggedOutUser from "../../hooks/useRedirectLoggedOutUsers";
-import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { markContactAsCalled } from "../../services/contactService";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  callInitiated,
+  markContactAsCalled,
+} from "../../services/contactService";
+import { SET_LOGIN } from "../../redux/features/auth/authSlice";
+import { logOutUser } from "../../services/authService";
 
 const Calls = () => {
   const location = useLocation();
   useRedirectLoggedOutUser(`/login?redirect_url=${location.pathname}`);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "NGN",
+    }).format(amount);
+  };
 
   const { agent } = useSelector((state) => state.auth);
 
@@ -34,17 +48,25 @@ const Calls = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 20;
 
-  // Sorting: "Called" goes last
+  const statusOrder = {
+    "Not Called": 0,
+    "Call Initiated": 1,
+    Called: 2,
+  };
+
+  // Sort contacts
   const sortedContacts = [...contacts].sort((a, b) => {
-    if (a.STATUS === "Called" && b.STATUS !== "Called") return 1;
-    if (a.STATUS !== "Called" && b.STATUS === "Called") return -1;
-    return 0;
+    const aRank = statusOrder[a.STATUS] ?? 99;
+    const bRank = statusOrder[b.STATUS] ?? 99;
+    return aRank - bRank;
   });
 
   // Filter by tab
   const filteredContacts =
     activeTab === "my"
       ? sortedContacts.filter((c) => c.AGENT === agent.agent.id)
+      : activeTab === "others"
+      ? sortedContacts.filter((c) => c.STATUS === "Call Initiated")
       : sortedContacts;
 
   // Pagination
@@ -55,13 +77,19 @@ const Calls = () => {
     startIndex + pageSize
   );
 
-  const handleCall = (contact) => {
+  const handleCall = async (contact) => {
     setSelectedContact(contact);
     const updated = contacts.map((c) =>
       c.CUST_ID === contact.CUST_ID
-        ? { ...c, STATUS: "Called", LAST_CALLED: new Date().toLocaleString(), AGENT: agent.id }
+        ? {
+            ...c,
+            STATUS: "Call Initiated",
+            LAST_CALLED: new Date().toLocaleString(),
+            AGENT: agent.id,
+          }
         : c
     );
+    await callInitiated(contact._id, agent);
     setContacts(updated);
     window.location.href = `tel:${contact.PHONE_NUMBER}`;
   };
@@ -74,7 +102,6 @@ const Calls = () => {
     );
     setContacts(updated);
 
-    console.log("Saving note for contact:", selectedContact._id, note);
     await markContactAsCalled(selectedContact._id, note, agent);
 
     setNote("");
@@ -186,6 +213,21 @@ const Calls = () => {
       </div>
       <br />
 
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-xl font-bold">Make Calls</h1>
+        <button
+          onClick={() => {
+            dispatch(SET_LOGIN(false));
+            logOutUser();
+            navigate("/login");
+          }}
+          className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+        >
+          Logout
+        </button>
+      </div>
+      <br />
+
       {/* Tabs */}
       <div className="flex gap-4 mb-4">
         <button
@@ -213,6 +255,19 @@ const Calls = () => {
           }`}
         >
           My Calls
+        </button>
+        <button
+          onClick={() => {
+            setActiveTab("others");
+            setCurrentPage(1);
+          }}
+          className={`px-4 py-2 rounded-lg ${
+            activeTab === "others"
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 hover:bg-gray-300"
+          }`}
+        >
+          Others
         </button>
       </div>
       <br />
@@ -244,18 +299,29 @@ const Calls = () => {
                       key={head}
                       className="gic-td px-4 py-2 border border-gray-200 align-top"
                     >
-                      {head === "RECORDING" && contact.RECORDING ? (
-                        <a
-                          href={contact.RECORDING}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-600 underline"
-                        >
-                          Listen
-                        </a>
-                      ) : (
-                        contact[head.replace(" ", "_")] || ""
-                      )}
+                      {(() => {
+                        const key = head.replace(" ", "_");
+
+                        if (head === "RECORDING" && contact.RECORDING) {
+                          return (
+                            <a
+                              href={contact.RECORDING}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-600 underline"
+                            >
+                              Listen
+                            </a>
+                          );
+                        }
+
+                        if (head === "UNPAID") {
+                          const value = contact[key];
+                          return value ? formatCurrency(value) : "";
+                        }
+
+                        return contact[key] ?? "";
+                      })()}
                     </td>
                   ))}
                   <td className="gic-td px-4 py-2 border border-gray-200 sticky right-0 bg-white shadow-lg flex gap-2">
@@ -312,7 +378,8 @@ const Calls = () => {
               <strong>Account No:</strong> {selectedContact.SETTLEMENT_ACCOUNT}
             </p>
             <p className="mb-1">
-              <strong>Remaining Balance:</strong> {selectedContact.UNPAID}
+              <strong>Remaining Balance:</strong>{" "}
+              {formatCurrency(selectedContact.UNPAID)}
             </p>
             <p className="mb-1">
               <strong>Full Name:</strong> {selectedContact.CUSTOMER_NAME}

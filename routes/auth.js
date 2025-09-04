@@ -67,3 +67,15 @@ authRouter.get("/loggedin-status", (req, res) => {
   }
   return res.json(false);
 });
+
+authRouter.post("/logout", (req, res) => {
+  res.cookie("token", "", {
+    path: "/",
+    httpOnly: true,
+    secure: false, // set to true if using HTTPS in production
+    sameSite: "lax",
+    expires: new Date(0), // expire immediately
+  });
+
+  res.json({ message: "Logged out successfully" });
+});
