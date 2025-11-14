@@ -8,14 +8,14 @@ import {
   Typography,
   Paper,
 } from "@mui/material";
-import { toast, ToastContainer } from "react-toastify";
+// import { toast, ToastContainer } from "react-toastify";
+import { toast } from "sonner";
 import "react-toastify/dist/ReactToastify.css";
 import "./sendmessage.css";
 import axios from "axios";
+import { getSmsBalance, sendBulkSMS } from "../../services/smsService";
 
-const MULTITEXT_EMAIL = "yemijoshua81@gmail.com";
-const MULTITEXT_PASSWORD = "KaXEJg5bgSue$bJ";
-const MULTITEXT_API_BASE = "https://app.multitexter.com/v2/app/sms";
+
 
 export default function SendMessage() {
   const [data, setData] = useState([]);
@@ -25,10 +25,18 @@ export default function SendMessage() {
   const [loading, setLoading] = useState(false);
   const [previewMessage, setPreviewMessage] = useState("");
   const [messageTemplate, setMessageTemplate] = useState(
-    "{CUSTOMER_NAME}, your Access Bank acct {SETTLEMENT_ACCOUNT} owes ₦{UNPAID}. Pay by 19/08/25 to avoid further serious recovery actions. Call Bukola 09122388447 now."
+    "{CUSTOMER_NAME}, your Access Bank Acct {SETTLEMENT_ACCOUNT} owes ₦{UNPAID}. Pay by 15/10/2025 to avoid BVN SWIPE,GSI and other strict recovery actions. Call Bukola:09122448685"
   );
+  // "Dear {CUSTOMER_NAME}, your Access Bank Acct {SETTLEMENT_ACCOUNT} owes ₦{UNPAID}. Pay latest by 15/10/2025 to avoid BVN SWIPE,GSI and other strict recovery actions. Contact Bukola:09122448685"
   const [startRow, setStartRow] = useState(1);
   const [endRow, setEndRow] = useState(100);
+
+  const REQUIRED_FIELDS = [
+    "CUSTOMER_NAME",
+    "SETTLEMENT_ACCOUNT",
+    "UNPAID",
+    "PHONE_NUMBER",
+  ];
 
   useEffect(() => {
     fetchBalance();
@@ -43,18 +51,13 @@ export default function SendMessage() {
 
   const fetchBalance = async () => {
     try {
-      const response = await axios.get(
-        `https://app.multitexter.com/v2/app/getbalance`,
-        {
-          params: { email: MULTITEXT_EMAIL, password: MULTITEXT_PASSWORD },
-        }
-      );
-      // console.log("Balance Response:", response.data);
-      if (response.data.status === 1) {
+      const data = await getSmsBalance();
+
+      if (data.status === 1) {
         toast.success("Balance fetched successfully");
-        setBalance(response.data.amount);
+        setBalance(data.amount);
       } else {
-        toast.error(`Error fetching balance - ${response.data.msg}`);
+        toast.error(`Error fetching balance - ${data.msg}`);
       }
     } catch (error) {
       console.error("Error fetching balance:", error);
@@ -62,65 +65,101 @@ export default function SendMessage() {
     }
   };
 
-  const handleFileUpload = (event) => {
+  const handleFileUpload = async (event) => {
     const file = event.target.files[0];
-    const reader = new FileReader();
+    if (!file) return;
+
     setLoading(true);
 
-    reader.onload = (e) => {
-      const binaryStr = e.target.result;
-      const workbook = XLSX.read(binaryStr, { type: "binary" });
-      const sheet = workbook.Sheets[workbook.SheetNames[0]];
-      const parsedData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+    try {
+      const buffer = await file.arrayBuffer();
+      const workbook = XLSX.read(buffer);
+      const sheet = workbook.Sheets[workbook.SheetNames[1]];
 
-      let headers = parsedData[0] || [];
-      headers = headers.map((header) => header.trim()); // Trim all headers
+      const rawJson = XLSX.utils.sheet_to_json(sheet);
 
-      const slicedData = parsedData.slice(startRow, endRow + 1).map((row) => {
+      console.log("Raw JSON Data:", rawJson);
+
+      const cleanedData = rawJson.map((row) => {
         let obj = {};
-        headers.forEach((header, index) => {
-          obj[header] = row[index] || "";
+        REQUIRED_FIELDS.forEach((field) => {
+          const matchingKey = Object.keys(row).find(
+            (k) => k.trim().toLowerCase() === field.toLowerCase()
+          );
+          obj[field] = matchingKey ? row[matchingKey] : "";
         });
         return obj;
       });
 
-      console.log("HEADERS:", headers);
-
-      setData(slicedData);
-      setLoading(false);
+      setData(cleanedData.slice(startRow - 1, endRow)); // Apply row slicing
       toast.success("File uploaded successfully");
-    };
-
-    reader.readAsBinaryString(file);
+    } catch (err) {
+      console.error("File parsing error:", err);
+      toast.error("Error reading file");
+    } finally {
+      setLoading(false);
+    }
   };
 
+  // const handleRowSelection = (index) => {
+  //   setSelectedRows((prev) =>
+  //     prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+  //   );
+
+  //   // Update the preview message with the first selected row
+  //   if (data[index]) {
+  //     const msg = formatMessage(data[index]);
+  //     setPreviewMessage(msg);
+
+  //     const pages = calculatePages(msg); // Pass the actual string, not function
+  //     console.log(`This message will take ${pages} page(s).`);
+  //   }
+  // };
+
   const handleRowSelection = (index) => {
-    setSelectedRows((prev) =>
-      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
-    );
+    const row = data[index];
 
-    // Update the preview message with the first selected row
-    if (data[index]) {
-      setPreviewMessage(formatMessage(data[index]));
+    setSelectedRows((prev) => {
+      const exists = prev.find((r) => r === row);
+      return exists ? prev.filter((r) => r !== row) : [...prev, row];
+    });
 
-      const pages = calculatePages(formatMessage);
+    // Update preview message with the first selected row
+    if (row) {
+      const msg = formatMessage(row);
+      setPreviewMessage(msg);
+
+      const pages = calculatePages(msg);
       console.log(`This message will take ${pages} page(s).`);
     }
   };
+
+  // const handleSelectAll = () => {
+  //   if (selectAll) {
+  //     setSelectedRows([]);
+  //   } else {
+  //     setSelectedRows(
+  //       data.map((_, index) => {
+  //         if (data[index]) {
+  //           setPreviewMessage(formatMessage(data[0]));
+  //         }
+  //         return index;
+  //       })
+  //     );
+  //   }
+  //   setSelectAll(!selectAll);
+  // };
 
   const handleSelectAll = () => {
     if (selectAll) {
       setSelectedRows([]);
     } else {
-      setSelectedRows(
-        data.map((_, index) => {
-          if (data[index]) {
-            setPreviewMessage(formatMessage(data[0]));
-          }
-          return index;
-        })
-      );
+      setSelectedRows(data); // directly store all row objects
+      if (data[0]) {
+        setPreviewMessage(formatMessage(data[0]));
+      }
     }
+    console.log("Selected Rows after Select All: ", selectedRows);
     setSelectAll(!selectAll);
   };
 
@@ -139,6 +178,10 @@ export default function SendMessage() {
       if (cleanKey.toLowerCase() === "outstanding balance") {
         return value ? `${Number(value).toLocaleString()}` : "₦0.00";
       }
+
+      if (cleanKey.toLowerCase() === "unpaid") {
+        return value ? `${Number(value).toFixed(2)}` : "₦0.00";
+      }
       console.log(String(value).length);
       return value !== undefined ? String(value) : "";
     });
@@ -146,44 +189,53 @@ export default function SendMessage() {
 
   const handleSendSMS = async () => {
     if (selectedRows.length === 0) {
-      toast.warn("No recipients selected");
+      toast("No recipients selected");
+      return;
+    }
+
+    console.log("Selected Rows: ", selectedRows);
+
+    if (loading === true) {
+      toast.error("Application in a loading state");
       return;
     }
 
     setLoading(true);
-    selectedRows.forEach(async (index) => {
-      const row = data[index];
-      // console.log(
-      //   `Sending SMS to ${row["Mobile Number"]}: ${formatMessage(row)}`
-      // );
-      setLoading(true);
-      try {
-        const response = await axios.post(`${MULTITEXT_API_BASE}`, {
-          email: MULTITEXT_EMAIL,
-          password: MULTITEXT_PASSWORD,
-          message: formatMessage(row),
-          recipients: row["PHONE NUMBER"],
-          sender_name: "ReMiNDERz",
+
+    // Build payload for backend
+    // const rowsToSend = selectedRows.map((index) => ({
+    //   message: formatMessage(data[index]),
+    //   recipient: data[index]["PHONE_NUMBER"],
+    // }));
+
+    // const rowsToSend = selectedRows.map((index) => data[index]);
+
+    try {
+      const data = await sendBulkSMS({
+        rows: selectedRows,
+        template: messageTemplate,
+      });
+
+      if (data.success) {
+        data.results.forEach((r) => {
+          if (r.status === 1) {
+            toast.success(`SMS sent to ${r.recipient}`);
+          } else {
+            toast.error(`Failed to send SMS to ${r.recipient} - ${r.msg}`);
+          }
         });
-        console.log("SMS Response:", response.data);
-        if (response.data.status === 1) {
-          toast.success(`SMS sent to ${row["PHONE NUMBER"]}`);
-        } else {
-          toast.error(
-            `Failed to send SMS to ${row["PHONE NUMBER"]} - ${response.data.msg}`
-          );
-        }
-      } catch (error) {
-        console.error("Error sending SMS:", error);
-        toast.error(`Failed to send SMS to ${row["PHONE NUMBER"]}`);
       }
+    } catch (error) {
+      console.error("Error sending SMS:", error);
+      toast.error("Bulk SMS send failed");
+    } finally {
       setLoading(false);
-    });
+    }
   };
 
   return (
     <div className="container">
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <Paper className="balance-card">
         <Typography variant="h6">
           Balance: {balance || "Loading..."} units
@@ -224,20 +276,6 @@ export default function SendMessage() {
         <input type="file" accept=".xlsx, .xls" onChange={handleFileUpload} />
         {loading && <CircularProgress size={24} className="loading-spinner" />}
       </div>
-
-      {/* <div className="message-container">
-        <h2 className="message-title">Message Template</h2>
-        <TextField
-          value={messageTemplate}
-          onChange={(e) => setMessageTemplate(e.target.value)}
-          className="message-input"
-        />
-        <div className="send-button-container">
-          <Button onClick={handleSendSMS} className="send-button">
-            Send SMS
-          </Button>
-        </div>
-      </div> */}
 
       <div className="message-container">
         <h2 className="message-title">Message Template</h2>

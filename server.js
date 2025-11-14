@@ -14,11 +14,13 @@ import { config } from "./config.js";
 import { connectDB } from "./utils/db.js";
 import { authRouter } from "./routes/auth.js";
 import { contactRoute } from "./routes/contact.js";
+import { smsRoute } from "./routes/sms.js";
 import { agentsRouter } from "./routes/agents.js";
 import { leadsRouter } from "./routes/leads.js";
 import { campaignsRouter } from "./routes/campaigns.js";
 import { callsRouter } from "./routes/calls.js";
 import { dialerService } from "./dialer/dialer.service.js";
+import { ApifyClient } from 'apify-client';
 
 const app = express();
 app.use(cookieParser());
@@ -48,6 +50,7 @@ app.get("/health", (req, res) => res.json({ ok: true }));
 
 app.use("/api/auth", authRouter);
 app.use("/api/contacts", contactRoute);
+app.use("/api/sms", smsRoute);
 // app.use("/api/agents", agentsRouter);
 // app.use("/api/leads", leadsRouter);
 // app.use("/api/campaigns", campaignsRouter);
@@ -96,3 +99,43 @@ export const io = new Server(server, { cors: { origin: config.corsOrigin } });
     console.log(`[http] listening on ${config.port}`)
   );
 })();
+
+
+
+
+// const client = new ApifyClient({
+//     token: 'apify_api_E7VH1V7kDtLjzjDv54TJURxRxpHuzk21L4sZ',
+// });
+
+// // // Prepare Actor input
+// const input = {
+//     "urls": [
+//         {
+//             "url": "https://www.trendyol.com/en/madamra/siyah-kadin-tokali-capraz-askili-canta-p-444770884",
+//             "country_code": "sa"
+//         },
+//         {
+//             "url": "https://www.trendyol.com/madamra/siyah-kadin-tokali-capraz-askili-canta-p-444770884"
+//         }
+//     ],
+//     "auto_select_country_code_if_missing": true,
+//     "max_retries_per_url": 2,
+//     "proxy": {
+//         "useApifyProxy": false
+//     }
+// };
+
+// // Run the Actor and wait for it to finish
+// const run = await client.actor("ecomscrape/trendyol-product-page-details-scraper").call(input);
+
+// // Fetch and print Actor results from the run's dataset (if any)
+// console.log('Results from dataset');
+// console.log("RUN", run);
+
+// const { items } = await client.dataset(run.defaultDatasetId).listItems();
+
+// console.log("ITEMS", items)
+
+// items.forEach((item) => {
+//     console.dir(item);
+// });

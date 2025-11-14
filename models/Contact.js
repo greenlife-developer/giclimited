@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const ContactSchema = new mongoose.Schema(
   {
-    CUST_ID: { type: String, required: true, unique: true },
+    CUST_ID: { type: String},
     CUSTOMER_NAME: { type: String, required: true },
     REF_NO: String,
     SETTLEMENT_ACCOUNT: String,

@@ -13,7 +13,9 @@
   "description": "",
   "dependencies": {
     "@radix-ui/react-toast": "^1.2.15",
+    "apify-client": "^2.17.0",
     "asterisk-ami-client": "^1.1.5",
+    "axios": "^1.12.1",
     "bcryptjs": "^3.0.2",
     "body-parser": "^2.2.0",
     "class-variance-authority": "^0.7.1",
@@ -27,6 +29,7 @@
     "morgan": "^1.10.1",
     "socket.io": "^4.8.1",
     "sonner": "^2.0.7",
+    "twilio": "^5.10.4",
     "url": "^0.11.4"
   },
   "devDependencies": {

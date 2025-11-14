@@ -9,6 +9,7 @@ import {
 } from "../../services/contactService";
 import { SET_LOGIN } from "../../redux/features/auth/authSlice";
 import { logOutUser } from "../../services/authService";
+import { toast } from "sonner";
 
 const Calls = () => {
   const location = useLocation();
@@ -108,6 +109,7 @@ const Calls = () => {
     setNote("");
     setRecording(null);
     setSelectedContact(null);
+    toast.success("Note saved successfully!");
   };
 
   const headers = [

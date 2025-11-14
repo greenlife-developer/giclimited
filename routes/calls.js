@@ -2,6 +2,9 @@ import express from "express";
 import { authMiddleware } from "../utils/auth.js";
 import { Call } from "../models/Call.js";
 
+// const twilio = require("twilio"); // Or, for ESM: import twilio from "twilio";
+import twilio from "twilio";
+
 export const callsRouter = express.Router();
 
 callsRouter.get("/", authMiddleware("agent"), async (req, res) => {
@@ -23,3 +26,21 @@ callsRouter.post(
     res.json({ ok: true });
   }
 );
+
+// const accountSid = process.env.TWILIO_ACCOUNT_SID;
+// const authToken = process.env.TWILIO_AUTH_TOKEN;
+// const client = twilio(accountSid, authToken);
+
+// async function createCall() {
+//   const call = await client.calls.create({
+//     from: "+19016686661",
+//     to: "+2348065109764",
+//     twiml: `<Response>
+//       <Dial callerId="+19016686661">+2348065109764</Dial> 
+//     </Response>`,
+//   });
+
+//   console.log(call.sid);
+// }
+
+// createCall();

@@ -32,8 +32,7 @@ contactRoute.get("/", async (req, res) => {
 // @route   POST /api/contacts/upload
 contactRoute.post("/upload", async (req, res) => {
   try {
-    const contacts = req.body; // JSON from frontend Excel parse
-    // console.log("CONTACTS: ", contacts);
+    const contacts = req.body;
     if (!Array.isArray(contacts)) {
       return res.status(400).json({ message: "Invalid data format" });
     }
