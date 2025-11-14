@@ -45,45 +45,7 @@ smsRoute.get("/get-balance", async (req, res) => {
   }
 });
 
-// @route   POST /api/sms/send-sms
-// @desc    Send SMS to recipients
-// @access  Private
-// smsRoute.post("/send-sms", async (req, res) => {
-//   const { rows } = req.body;
 
-//   if (!rows || rows.length === 0) {
-//     return res.status(400).json({ message: "No rows provided" });
-//   }
-
-//   let results = [];
-
-//   for (const row of rows) {
-//     const { message, recipient } = row;
-//     try {
-//       const response = await axios.post(`${MULTITEXT_API_BASE}/sms`, {
-//         email: MULTITEXT_EMAIL,
-//         password: MULTITEXT_PASSWORD,
-//         message,
-//         recipients: recipient,
-//         sender_name: "ReMiNDERz",
-//       });
-
-//       results.push({
-//         recipient,
-//         status: response.data.status,
-//         msg: response.data.msg || "Sent",
-//       });
-//     } catch (err) {
-//       results.push({
-//         recipient,
-//         status: 0,
-//         msg: `Error: ${err.message}`,
-//       });
-//     }
-//   }
-
-//   res.json({ success: true, results });
-// });
 
 smsRoute.post("/send-sms", async (req, res) => {
   const { rows, template } = req.body;

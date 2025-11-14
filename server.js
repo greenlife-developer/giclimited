@@ -103,39 +103,3 @@ export const io = new Server(server, { cors: { origin: config.corsOrigin } });
 
 
 
-// const client = new ApifyClient({
-//     token: 'apify_api_E7VH1V7kDtLjzjDv54TJURxRxpHuzk21L4sZ',
-// });
-
-// // // Prepare Actor input
-// const input = {
-//     "urls": [
-//         {
-//             "url": "https://www.trendyol.com/en/madamra/siyah-kadin-tokali-capraz-askili-canta-p-444770884",
-//             "country_code": "sa"
-//         },
-//         {
-//             "url": "https://www.trendyol.com/madamra/siyah-kadin-tokali-capraz-askili-canta-p-444770884"
-//         }
-//     ],
-//     "auto_select_country_code_if_missing": true,
-//     "max_retries_per_url": 2,
-//     "proxy": {
-//         "useApifyProxy": false
-//     }
-// };
-
-// // Run the Actor and wait for it to finish
-// const run = await client.actor("ecomscrape/trendyol-product-page-details-scraper").call(input);
-
-// // Fetch and print Actor results from the run's dataset (if any)
-// console.log('Results from dataset');
-// console.log("RUN", run);
-
-// const { items } = await client.dataset(run.defaultDatasetId).listItems();
-
-// console.log("ITEMS", items)
-
-// items.forEach((item) => {
-//     console.dir(item);
-// });
