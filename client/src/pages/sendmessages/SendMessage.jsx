@@ -25,7 +25,7 @@ export default function SendMessage() {
   const [loading, setLoading] = useState(false);
   const [previewMessage, setPreviewMessage] = useState("");
   const [messageTemplate, setMessageTemplate] = useState(
-    "{CUSTOMER_NAME}, your Access Bank Acct {SETTLEMENT_ACCOUNT} owes ₦{UNPAID}. Pay by 15/10/2025 to avoid BVN SWIPE,GSI and other strict recovery actions. Call Bukola:09122448685"
+    "{CUSTOMER_NAME}, your Access Bank Acct {SETTLEMENT_ACCOUNT} owes ₦{UNPAID}. Pay by 20/11/2025 to avoid BVN SWIPE,GSI and other strict recovery actions. Call Bukola:09122448685"
   );
   // "Dear {CUSTOMER_NAME}, your Access Bank Acct {SETTLEMENT_ACCOUNT} owes ₦{UNPAID}. Pay latest by 15/10/2025 to avoid BVN SWIPE,GSI and other strict recovery actions. Contact Bukola:09122448685"
   const [startRow, setStartRow] = useState(1);
@@ -74,7 +74,7 @@ export default function SendMessage() {
     try {
       const buffer = await file.arrayBuffer();
       const workbook = XLSX.read(buffer);
-      const sheet = workbook.Sheets[workbook.SheetNames[1]];
+      const sheet = workbook.Sheets[workbook.SheetNames[0]];
 
       const rawJson = XLSX.utils.sheet_to_json(sheet);
 
